@@ -11,7 +11,8 @@ int main()
 
         polynomial t;
         cin>>t;
-        cout<<t;
+        cout<<t<<endl;
+        cout<<t.derive();
     }
     catch (string e)
     {

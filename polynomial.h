@@ -45,7 +45,6 @@ class polynomial
         void deleteAll();
         void order();
         void combineLikeTerms();
-        bool compare(const term &x, const term &y);
         void reduce();
 
 };

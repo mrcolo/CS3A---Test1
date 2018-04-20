@@ -121,6 +121,10 @@ void polynomial::order()
                 poly[i] = poly[j];
                 poly[j] = temp;
             }
+    for(size_t i = 0; i < poly.size(); ++i){
+        if(poly[i] == 0)
+            poly.erase(poly.begin()+i);
+    }
 }
 
 void polynomial::combineLikeTerms()
@@ -195,7 +199,7 @@ istream& operator>>(istream& in, polynomial &p)
     if(&in == &cin) {
         cout << "Please, write your polynomial expression." << endl;
         string s;
-        cin >> s;
+        getline(cin,s);
         polynomial temp(s);
         p = temp;
     }

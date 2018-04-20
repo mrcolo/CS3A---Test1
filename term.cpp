@@ -180,7 +180,6 @@ istream& operator>>(istream& in, term &t)
     cin>>termString;
 
     t.stringToTerm(termString);
-
     return in;
 }
 
@@ -192,6 +191,7 @@ void term::stringToTerm(string s) {
 
     bool yesUpperx = s.find('X') != string::npos;
     bool yesCap = s.find("^") != string::npos;
+
 
     if(yesUpperx && yesCap){
 
