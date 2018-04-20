@@ -75,7 +75,7 @@ void polynomial::evaluate(int number){
 
 }
 
-string polynomial::derivative(){
+polynomial polynomial::derive(){
     string result = "";
     stringstream ss;
     for(int i = 0;i < poly.size(); i++){
@@ -87,9 +87,18 @@ string polynomial::derivative(){
             result+=(current+" ");
             ss.clear();
         }
-
     }
-    return result;
+    polynomial p(result);
+    return p;
+}
+
+polynomial polynomial::returnDerivative(int i){
+    polynomial actual = *this;
+    for(int j = 0 ; j < i ; j++){
+        actual = actual.derive();
+    }
+
+    return actual;
 }
 
 bool polynomial::empty(){

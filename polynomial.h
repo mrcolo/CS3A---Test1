@@ -20,7 +20,8 @@ class polynomial
         polynomial operator-();
         bool empty();
         void evaluate(int number);
-        string derivative();
+        polynomial derive();
+        polynomial returnDerivative(int i);
         friend
         polynomial operator+(const polynomial& a, const polynomial &b);
 

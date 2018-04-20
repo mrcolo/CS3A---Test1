@@ -10,9 +10,9 @@ term::term(double c, double p)
 }
 
 term::term(string s) {
-    int pos;
     if(s.find('x') != string::npos)
         s[s.find('x')] = 'X';
+
     stringToTerm(s);
 }
 
