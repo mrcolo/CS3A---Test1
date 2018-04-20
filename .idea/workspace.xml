@@ -12,19 +12,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dada6a1b-de2b-46b9-b7d5-12f77e029468" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/wilkinsonTEST1.dir/fraction.cpp.o" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/wilkinsonTEST1.dir/fractionfriends.cpp.o" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/wilkinsonTEST1.dir/fractionfriends.cpp.o" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/wilkinsonTEST1.dir/main.cpp.o" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/wilkinsonTEST1.dir/main.cpp.o" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/wilkinsonTEST1.dir/polynomial.cpp.o" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/wilkinsonTEST1.dir/term.cpp.o" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/wilkinsonTEST1" afterPath="$PROJECT_DIR$/cmake-build-debug/wilkinsonTEST1" />
       <change beforePath="$PROJECT_DIR$/fraction.cpp" afterPath="$PROJECT_DIR$/fraction.cpp" />
-      <change beforePath="$PROJECT_DIR$/fraction.h" afterPath="$PROJECT_DIR$/fraction.h" />
-      <change beforePath="$PROJECT_DIR$/fractionfriends.cpp" afterPath="$PROJECT_DIR$/fractionfriends.cpp" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" afterPath="$PROJECT_DIR$/main.cpp" />
       <change beforePath="$PROJECT_DIR$/term.cpp" afterPath="$PROJECT_DIR$/term.cpp" />
-      <change beforePath="$PROJECT_DIR$/term.h" afterPath="$PROJECT_DIR$/term.h" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -72,23 +61,23 @@
       <file leaf-file-name="fraction.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/fraction.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="126" column="34" lean-forward="true" selection-start-line="126" selection-start-column="34" selection-end-line="126" selection-end-column="34" />
+            <state relative-caret-position="330">
+              <caret line="22" column="19" lean-forward="false" selection-start-line="22" selection-start-column="19" selection-end-line="22" selection-end-column="19" />
               <folding>
-                <element signature="e#331#1155#0" expanded="false" />
-                <element signature="e#1157#1197#0" expanded="false" />
-                <element signature="e#1199#1363#0" expanded="false" />
-                <element signature="e#1365#1556#0" expanded="false" />
-                <element signature="e#1558#1682#0" expanded="false" />
-                <element signature="e#1684#1786#0" expanded="false" />
-                <element signature="e#1788#1890#0" expanded="false" />
-                <element signature="e#1892#1994#0" expanded="false" />
-                <element signature="e#1996#2097#0" expanded="false" />
-                <element signature="e#2100#2158#0" expanded="false" />
-                <element signature="e#2160#2222#0" expanded="false" />
-                <element signature="e#2284#2411#0" expanded="false" />
-                <element signature="e#2413#2592#0" expanded="false" />
-                <element signature="e#2594#2680#0" expanded="false" />
+                <element signature="e#351#1175#0" expanded="false" />
+                <element signature="e#1177#1217#0" expanded="false" />
+                <element signature="e#1219#1383#0" expanded="false" />
+                <element signature="e#1385#1576#0" expanded="false" />
+                <element signature="e#1578#1702#0" expanded="false" />
+                <element signature="e#1704#1806#0" expanded="false" />
+                <element signature="e#1808#1910#0" expanded="false" />
+                <element signature="e#1912#2014#0" expanded="false" />
+                <element signature="e#2016#2117#0" expanded="false" />
+                <element signature="e#2120#2178#0" expanded="false" />
+                <element signature="e#2180#2242#0" expanded="false" />
+                <element signature="e#2304#2431#0" expanded="false" />
+                <element signature="e#2433#2612#0" expanded="false" />
+                <element signature="e#2614#2700#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -126,7 +115,7 @@
       <file leaf-file-name="fraction.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/fraction.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="236">
+            <state relative-caret-position="-322">
               <caret line="26" column="39" lean-forward="true" selection-start-line="26" selection-start-column="39" selection-end-line="26" selection-end-column="39" />
               <folding />
             </state>
@@ -136,8 +125,8 @@
       <file leaf-file-name="term.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/term.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="305">
-              <caret line="170" column="1" lean-forward="true" selection-start-line="170" selection-start-column="1" selection-end-line="170" selection-end-column="1" />
+            <state relative-caret-position="245">
+              <caret line="166" column="38" lean-forward="false" selection-start-line="166" selection-start-column="38" selection-end-line="166" selection-end-column="38" />
               <folding>
                 <element signature="e#2286#2420#0" expanded="false" />
                 <element signature="e#2423#2526#0" expanded="false" />
@@ -154,8 +143,8 @@
       <find>porcodio</find>
       <find>derivative</find>
       <find>set</find>
-      <find>fraction to modify</find>
       <find>showpos</find>
+      <find>fraction to modify</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -170,8 +159,8 @@
         <option value="$PROJECT_DIR$/polynomial.cpp" />
         <option value="$PROJECT_DIR$/term.h" />
         <option value="$PROJECT_DIR$/fraction.h" />
-        <option value="$PROJECT_DIR$/fraction.cpp" />
         <option value="$PROJECT_DIR$/main.cpp" />
+        <option value="$PROJECT_DIR$/fraction.cpp" />
         <option value="$PROJECT_DIR$/term.cpp" />
       </list>
     </option>
@@ -260,23 +249,22 @@
       <workItem from="1522962602906" duration="10000" />
       <workItem from="1522962615664" duration="3253000" />
       <workItem from="1524257686412" duration="87000" />
-      <workItem from="1524257899267" duration="7998000" />
+      <workItem from="1524257899267" duration="8264000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15163000" />
+    <option name="totallyTimeSpent" value="15429000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="873" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958803" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2846442" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2846442" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -302,7 +290,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/fraction.cpp</url>
-          <line>64</line>
+          <line>65</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
@@ -562,25 +550,51 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/polynomial.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="71" column="63" lean-forward="false" selection-start-line="71" selection-start-column="63" selection-end-line="71" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fraction.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-322">
+          <caret line="26" column="39" lean-forward="true" selection-start-line="26" selection-start-column="39" selection-end-line="26" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/fraction.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="126" column="34" lean-forward="true" selection-start-line="126" selection-start-column="34" selection-end-line="126" selection-end-column="34" />
+        <state relative-caret-position="330">
+          <caret line="22" column="19" lean-forward="false" selection-start-line="22" selection-start-column="19" selection-end-line="22" selection-end-column="19" />
           <folding>
-            <element signature="e#331#1155#0" expanded="false" />
-            <element signature="e#1157#1197#0" expanded="false" />
-            <element signature="e#1199#1363#0" expanded="false" />
-            <element signature="e#1365#1556#0" expanded="false" />
-            <element signature="e#1558#1682#0" expanded="false" />
-            <element signature="e#1684#1786#0" expanded="false" />
-            <element signature="e#1788#1890#0" expanded="false" />
-            <element signature="e#1892#1994#0" expanded="false" />
-            <element signature="e#1996#2097#0" expanded="false" />
-            <element signature="e#2100#2158#0" expanded="false" />
-            <element signature="e#2160#2222#0" expanded="false" />
-            <element signature="e#2284#2411#0" expanded="false" />
-            <element signature="e#2413#2592#0" expanded="false" />
-            <element signature="e#2594#2680#0" expanded="false" />
+            <element signature="e#351#1175#0" expanded="false" />
+            <element signature="e#1177#1217#0" expanded="false" />
+            <element signature="e#1219#1383#0" expanded="false" />
+            <element signature="e#1385#1576#0" expanded="false" />
+            <element signature="e#1578#1702#0" expanded="false" />
+            <element signature="e#1704#1806#0" expanded="false" />
+            <element signature="e#1808#1910#0" expanded="false" />
+            <element signature="e#1912#2014#0" expanded="false" />
+            <element signature="e#2016#2117#0" expanded="false" />
+            <element signature="e#2120#2178#0" expanded="false" />
+            <element signature="e#2180#2242#0" expanded="false" />
+            <element signature="e#2304#2431#0" expanded="false" />
+            <element signature="e#2433#2612#0" expanded="false" />
+            <element signature="e#2614#2700#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/term.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="22" column="14" lean-forward="false" selection-start-line="22" selection-start-column="14" selection-end-line="22" selection-end-column="14" />
+          <folding>
+            <element signature="e#30#49#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -602,36 +616,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/polynomial.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="71" column="63" lean-forward="false" selection-start-line="71" selection-start-column="63" selection-end-line="71" selection-end-column="63" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fraction.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="236">
-          <caret line="26" column="39" lean-forward="true" selection-start-line="26" selection-start-column="39" selection-end-line="26" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/term.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="22" column="14" lean-forward="false" selection-start-line="22" selection-start-column="14" selection-end-line="22" selection-end-column="14" />
-          <folding>
-            <element signature="e#30#49#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/term.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="170" column="1" lean-forward="true" selection-start-line="170" selection-start-column="1" selection-end-line="170" selection-end-column="1" />
+        <state relative-caret-position="245">
+          <caret line="166" column="38" lean-forward="false" selection-start-line="166" selection-start-column="38" selection-end-line="166" selection-end-column="38" />
           <folding>
             <element signature="e#2286#2420#0" expanded="false" />
             <element signature="e#2423#2526#0" expanded="false" />

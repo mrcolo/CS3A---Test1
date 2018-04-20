@@ -161,10 +161,10 @@ term operator*(const term& a, const term &b)
 ostream& operator<<(ostream& out, const term &t)
 {
 
-    out<<t.coeff;
+    out<<std::showpos<<"("<<t.coeff<<")";
     if(t.power != 0)
     {
-       out<<"X"<<"^"<<t.power<<"";
+       out<<"X"<<"^"<<"("<<t.power<<")";
     }
     out<<" ";
     return out;

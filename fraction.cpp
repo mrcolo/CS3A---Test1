@@ -20,6 +20,7 @@ fraction::fraction(double x)
 fraction::fraction(string x)
 {
     stringToFraction(x);
+    this->reduce();
 }
 
 void fraction::stringToFraction(string x)
