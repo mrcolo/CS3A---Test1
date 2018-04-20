@@ -4,7 +4,7 @@
 #include <fstream>
 #include <cmath>
 #include <cstdlib>
-
+#include "fraction.h"
 using namespace std;
 
 class term
@@ -12,6 +12,7 @@ class term
     public:
         term(double c = 1, double p = 0);
         term(string s);
+        term(fraction c,fraction p);
         ~term();
         term(const term &other);
         term& operator=(const term &other);
@@ -21,6 +22,7 @@ class term
         double getPower() const;
         double getCoeff() const;
         void set(double c = 1, double p = 0);
+        void set(fraction c = 1, fraction p = 0);
 
         friend
         bool operator<(const term& a, const term &b);

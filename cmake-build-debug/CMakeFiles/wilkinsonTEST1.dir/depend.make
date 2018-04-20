@@ -7,14 +7,17 @@ CMakeFiles/wilkinsonTEST1.dir/fraction.cpp.o: ../fraction.h
 CMakeFiles/wilkinsonTEST1.dir/fractionfriends.cpp.o: ../fraction.h
 CMakeFiles/wilkinsonTEST1.dir/fractionfriends.cpp.o: ../fractionfriends.cpp
 
+CMakeFiles/wilkinsonTEST1.dir/main.cpp.o: ../fraction.h
 CMakeFiles/wilkinsonTEST1.dir/main.cpp.o: ../main.cpp
 CMakeFiles/wilkinsonTEST1.dir/main.cpp.o: ../polynomial.h
 CMakeFiles/wilkinsonTEST1.dir/main.cpp.o: ../term.h
 
+CMakeFiles/wilkinsonTEST1.dir/polynomial.cpp.o: ../fraction.h
 CMakeFiles/wilkinsonTEST1.dir/polynomial.cpp.o: ../polynomial.cpp
 CMakeFiles/wilkinsonTEST1.dir/polynomial.cpp.o: ../polynomial.h
 CMakeFiles/wilkinsonTEST1.dir/polynomial.cpp.o: ../term.h
 
+CMakeFiles/wilkinsonTEST1.dir/term.cpp.o: ../fraction.h
 CMakeFiles/wilkinsonTEST1.dir/term.cpp.o: ../term.cpp
 CMakeFiles/wilkinsonTEST1.dir/term.cpp.o: ../term.h
 

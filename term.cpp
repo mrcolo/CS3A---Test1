@@ -10,10 +10,15 @@ term::term(double c, double p)
 }
 
 term::term(string s) {
-    if(s.find('x') != string::npos)
-        s[s.find('x')] = 'X';
 
     stringToTerm(s);
+}
+
+term::term(fraction c, fraction p) {
+    if(p < 0)
+        set(c);
+    else
+        set(c,p);
 }
 
 term::~term()
@@ -80,6 +85,12 @@ void term::set(double c, double p)
     coeff = c;
     power = p;
 }
+
+void term::set(fraction c, fraction p){
+    coeff = c.getNum()/c.getDenom();
+    power = p.getNum()/p.getDenom();
+}
+
 
 bool operator<(const term& a, const term &b)
 {
@@ -164,52 +175,40 @@ istream& operator>>(istream& in, term &t)
 {
 
     t.coeff = t.power = 0;
-    stringstream ss;
+    //stringstream ss;
     string termString;
     cin>>termString;
-    if(((termString.find('x') == string::npos) || (termString.find('X') == string::npos)) && (termString.find('^') == string::npos)){
-        ss<<termString.substr(0,string::npos);
-        ss>>t.coeff;
-        t.power = 0;
 
-    }
-    else{
-        while(!(((termString.find('x') != string::npos) || (termString.find('X') != string::npos)) && (termString.find('^') != string::npos)) || termString.length() < 4){
-            cout<<"Please, insert a valid term in the format aX^b"<<endl;
-            cin>>termString;
-        }
-
-        ss<<termString.substr(0,termString.find("x"));
-        ss>>t.coeff;
-        ss.clear();
-        ss<<termString.substr(termString.find("^"),string::npos);
-        ss>>t.power;
-
-    }
+    t.stringToTerm(termString);
 
     return in;
 }
 
 void term::stringToTerm(string s) {
     stringstream ss;
-    if(((s.find('x') == string::npos) || (s.find('X') == string::npos)) && (s.find('^') == string::npos)){
-        ss<<s.substr(0,string::npos);
-        ss>>coeff;
-        power = 0;
-    }
-    else{
-        if(!(((s.find('x') != string::npos) || (s.find('X') != string::npos)) && (s.find('^') != string::npos)) || s.length() < 4){
-            coeff = 0;
-            power = 0;
-            return;
-        }
+
+    if(s.find('x') != string::npos)
+        s[s.find('x')] = 'X';
+
+    bool yesUpperx = s.find('X') != string::npos;
+    bool yesCap = s.find("^") != string::npos;
+
+    if(yesUpperx && yesCap){
+
         ss<<s.substr(0,s.find("X"));
         ss>>coeff;
+
         ss.clear();
+
         ss<<s.substr(s.find("^")+1,string::npos);
         ss>>power;
     }
+    else{
+            ss<<s.substr(0,string::npos);
+            ss>>coeff;
+            power = 0;
 
+    }
 }
 
 

@@ -191,15 +191,13 @@ istream& operator>>(istream& in, polynomial &p)
 {
     term input;
     p.poly.clear();
-    if(&in == &cin){
-        cout<<"Please, insert as many terms as you want in the format Ax^B. Write stop when you are done!"<<endl;
+
+    if(&in == &cin) {
+        cout << "Please, write your polynomial expression." << endl;
         string s;
-        do{
-            cin>>s;
-            term temp (s);
-            p.poly.push_back(temp);
-        }while(s != "stop");
-        p.poly.pop_back();
+        cin >> s;
+        polynomial temp(s);
+        p = temp;
     }
     else{
         while(in>>input)
