@@ -57,7 +57,7 @@ class term
         friend
         istream& operator>>(istream& in, term &t);
     private:
-        double coeff, power;
+        fraction coeff, power;
         void stringToTerm(string s);
         void copy(const term &other);
         void deleteMe();

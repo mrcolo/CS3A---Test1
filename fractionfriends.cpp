@@ -98,14 +98,5 @@ bool operator>(const fraction &x, const fraction &y)
     return x.num*y.denom > x.denom*y.num;
 }
 
-
-fraction operator<=(const fraction &x, const fraction &y)
-{
-    return !(x > y);
-}
-
-
-fraction operator>=(const fraction &x, const fraction &y)
-{
-    return !(x < y);
-}
+bool operator<=(const fraction& x, const fraction& y){ return !(x > y); }
+bool operator>=(const fraction& x, const fraction& y){ return !(x < y); }

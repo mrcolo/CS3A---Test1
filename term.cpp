@@ -43,7 +43,7 @@ term& term::operator=(const term &other)
 
 double term::operator()(double x)
 {
-    return coeff * pow(x,power);
+    return coeff.toDouble() * pow(x,power.toDouble());
 }
 
 term& term::operator+=(const term &other)
@@ -72,12 +72,12 @@ void term::deleteMe()
 
 double term::getPower() const
 {
-    return power;
+    return power.toDouble();
 }
 
 double term::getCoeff() const
 {
-    return coeff;
+    return coeff.toDouble();
 }
 
 void term::set(double c, double p)
@@ -102,7 +102,7 @@ bool operator<(const term& a, const term &b)
 
 bool operator<=(const term& a, const term &b)
 {
-    return ((a.power == b.power) && (a.coeff <= b.coeff))
+    return (a.power == b.power && (a.coeff <= b.coeff))
             ||
             (a.power <= b.power);
 }
@@ -161,7 +161,7 @@ term operator*(const term& a, const term &b)
 ostream& operator<<(ostream& out, const term &t)
 {
 
-    out<<std::showpos<<t.coeff;
+    out<<t.coeff;
     if(t.power != 0)
     {
        out<<"X"<<"^"<<t.power<<"";
@@ -194,14 +194,10 @@ void term::stringToTerm(string s) {
 
 
     if(yesUpperx && yesCap){
-
-        ss<<s.substr(0,s.find("X"));
-        ss>>coeff;
-
-        ss.clear();
-
-        ss<<s.substr(s.find("^")+1,string::npos);
-        ss>>power;
+        fraction f(s.substr(0,s.find("X")));
+        coeff = f;
+        fraction g(s.substr(s.find("^")+1,string::npos));
+        power = g;
     }
     else{
             ss<<s.substr(0,string::npos);

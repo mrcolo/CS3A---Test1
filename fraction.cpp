@@ -13,8 +13,8 @@ fraction::fraction(double x)
     ss<<x;
     string ans;
     ss>>ans;
-    cout<<"Fraction to modify: "<<ans<<endl;
     stringToFraction(ans);
+    this->reduce();
 }
 
 fraction::fraction(string x)
@@ -73,8 +73,6 @@ fraction::fraction(const fraction& other) // Copy constructor
     denom = other.denom;
 }
 
-//Return by reference allows for "chaining"
-//x = y = z = 2;
 fraction& fraction::operator=(const fraction& other) //Assignment operator
 {
      if(this != &other)
@@ -126,7 +124,9 @@ int fraction::getDenom() const//Accessor
 {
     return denom;
 }
-
+double fraction::toDouble() const{
+    return (num/denom);
+}
 void fraction::display() const//Display values
 {
     cout<<num;
@@ -134,12 +134,6 @@ void fraction::display() const//Display values
     {
         cout<<"/"<<denom<<" ";
     }
-}
-
-void fraction::input()//Get fraction from keyboard
-{
-    char junk;
-    cin>>num>>junk>>denom;
 }
 
 void fraction::reduce() //Helper function

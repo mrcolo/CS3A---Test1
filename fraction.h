@@ -25,8 +25,8 @@ class fraction
         void set(int n, int d); //Mutator - 2 argument
         int getNum() const; //Accessor
         int getDenom() const;//Accessor
+        double toDouble() const;
         void display() const;//Display values
-        void input();//Get fraction from keyboard
 
         friend
         ostream& operator<<(ostream& out, const fraction &f);
@@ -59,10 +59,10 @@ class fraction
         bool operator>(const fraction &x, const fraction &y);
 
         friend
-        fraction operator<=(const fraction &x, const fraction &y);
+        bool operator<=(const fraction &x, const fraction &y);
 
         friend
-        fraction operator>=(const fraction &x, const fraction &y);
+        bool operator>=(const fraction &x, const fraction &y);
 
         void reduce(); //Helper function
 

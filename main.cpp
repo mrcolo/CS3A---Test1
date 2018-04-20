@@ -5,14 +5,12 @@ using namespace std;
 
 int main()
 {
-    int i = 1;
     try
     {
 
         polynomial t;
         cin>>t;
-        cout<<t<<endl;
-        cout<<t.derive();
+        cout<<t;
     }
     catch (string e)
     {
