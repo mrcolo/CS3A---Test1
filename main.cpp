@@ -1,71 +1,126 @@
 #include <iostream>
 #include "polynomial.h"
+#include <vector>
 
 using namespace std;
-void getInput(const string &prompt, string &line);
-void evalCommand(string &line);
 
-int main()
-{
-    const string
-            COMMAND_PROMPT =
-                "input the following: \n"
-                "LET (stores algebraic expression as capital letter A-Z)\n"
-                "\texample: LET F = 2X + 4\n"
-                "EVAL (evaluates pre-stored algebraic expression at a given value)\n"
-                "\texample: EVAL F(1/4)\n"
-                "PRINT (prints pre-stored algebraic expression)\n"
-                "\texample: PRINT F\n"
-                ": ",
-            ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+string getInput(const string prompt, string& line);
+void evalCommand(string line, polynomial polys [26]);
+
+int main(int argc, char* argv[]){
+
+                 const string WELCOMEMSG = "Welcome to Expression Calculator. If you don't know what to do, type HELP.\n",
+                 INPUTPROMPT = "INPUT: ";
+
+    //TODO Create Functions for each case.
+    switch (argc){
+        case 1:
+            cout<<"No arguments."<<endl;
+            break;
+        case 2:
+            cout<<"One Argument"<<argv[1]<<endl;
+            break;
+        case 3:
+            cout<<"Two arguments!"<<argv[2]<<endl;
+    }
+
     string command;
 
-    try
-    {
-        getInput(COMMAND_PROMPT, command);
-        cout<<command<<endl;
-        evalCommand(command);
-        polynomial t;
-        cin>>t;
-        cout<<t;
-    }
-    catch (string &e)
-    {
-        cout << "ERROR:"<<endl<<e<<endl;
-    }
+    //App starts
+    cout<<WELCOMEMSG<<endl;
+    polynomial polys [26];
+    //Basic Controller
+    do{
+        try {
+            evalCommand(getInput(INPUTPROMPT, command), polys);
+            polys['F'];
+        }
+        catch (string& e){
+            cout << "ERROR:"<<endl<<e <<endl;
+        }
+
+    }while(command != "EXIT");
 
     return 0;
 }
 
-void getInput(const string &prompt, string &line)
-{
+string getInput(const string prompt, string& line){
     cout<<prompt;
     getline(cin, line);
+    cout<<endl;
+    return line;
 }
 
-void evalCommand(string &line)
+void evalCommand(string line, polynomial polys[26])
 {
+    const string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+                 INSTRUCTIONS =
+            "POSSIBLE INSTRUCTIONS: \n\n"
+                    "- LET  => Stores algebraic expression as capital letter A-Z\n\n"
+                    "\texample: LET F = 2X + 4\n\n"
+                    "- EVAL => evaluates pre-stored algebraic expression at a given value\n\n"
+                    "\texample: EVAL F(1/4)\n\n"
+                    "- PRINT => prints pre-stored algebraic expression\n\n"
+                    "\texample: PRINT F\n\n"
+                    "- SAVE => saves in the following file 26 pre-stored algebraic expression\n\n"
+                    "\texample: SAVE file.exp\n\n"
+                    "- LOAD => loads from the following file 26 pre-stored algebraic expression\n\n"
+                    "\texample: LOAD file.exp\n\n";
+
+    //TODO use string.find_first_of() instead
     string command(line.substr(0,line.find(' ')));
 
-    if(command == "LET" || command == "let")
+
+    //turns string to uppercase
+    for(int i = 0; i < command.length(); i++ )
+        command[i] = toupper(command[i]);
+
+    //TODO use function pointers to execute rather than if statements
+    if(command == "LET")
     {
-        cout<<"input: LET/let"<<endl;
-//        if(line.find('=') == line.npos)
-//        {
-//
-//        }
+
+        string exception;
+        size_t pos;
+
+        if((pos = line.find('=')) != string::npos){
+            char current_exp = toupper(line[pos-2]);
+
+            polynomial p(line.substr(pos+2,string::npos));
+
+            cout<<"Generated "<<current_exp<< " = "<<p<<endl;
+
+            polys[ALPHABET.find(current_exp)] = p;
+        }
+        else{
+            exception = "LET not valid. Function not provided.";
+            throw exception;
+        }
     }
-    else if(command == "EVAL" || command == "eval")
+    else if(command == "EVAL")
     {
         cout<<"input: EVAL/eval"<<endl;
     }
-    else if(command == "PRINT" || command == "print")
+    else if(command == "PRINT")
     {
         cout<<"input: PRINT/print"<<endl;
     }
+    else if(command == "SAVE"){
+        cout<<INSTRUCTIONS<<endl;
+    }
+    else if(command == "LOAD"){
+        cout<<INSTRUCTIONS<<endl;
+    }
+    else if(command == "EXIT"){
+        cout<<"Exiting Expression Calculator..."<<endl;
+        return;
+    }
+    else if(command == "HELP"){
+        cout<<INSTRUCTIONS<<endl;
+    }
     else
     {
-        cout<<"Incorrect Input Format!!!"<<endl;
+        string exception = "INCORRECT_INPUT";
+        throw exception;
     }
 }
 
