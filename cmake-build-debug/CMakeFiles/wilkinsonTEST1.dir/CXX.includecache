@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/Users/francescocolonnese/Desktop/wilkinsonTEST1/fraction.cpp
+/Users/arman/git/wilkinsonTEST1/fraction.cpp
 fraction.h
-/Users/francescocolonnese/Desktop/wilkinsonTEST1/fraction.h
+/Users/arman/git/wilkinsonTEST1/fraction.h
 
-/Users/francescocolonnese/Desktop/wilkinsonTEST1/fraction.h
+/Users/arman/git/wilkinsonTEST1/fraction.h
 iostream
 -
 sstream
@@ -18,25 +18,25 @@ sstream
 cmath
 -
 
-/Users/francescocolonnese/Desktop/wilkinsonTEST1/fractionfriends.cpp
+/Users/arman/git/wilkinsonTEST1/fractionfriends.cpp
 fraction.h
-/Users/francescocolonnese/Desktop/wilkinsonTEST1/fraction.h
+/Users/arman/git/wilkinsonTEST1/fraction.h
 
-/Users/francescocolonnese/Desktop/wilkinsonTEST1/main.cpp
+/Users/arman/git/wilkinsonTEST1/main.cpp
 iostream
 -
 polynomial.h
-/Users/francescocolonnese/Desktop/wilkinsonTEST1/polynomial.h
+/Users/arman/git/wilkinsonTEST1/polynomial.h
 
-/Users/francescocolonnese/Desktop/wilkinsonTEST1/polynomial.cpp
+/Users/arman/git/wilkinsonTEST1/polynomial.cpp
 polynomial.h
-/Users/francescocolonnese/Desktop/wilkinsonTEST1/polynomial.h
+/Users/arman/git/wilkinsonTEST1/polynomial.h
 sstream
 -
 vector
 -
 
-/Users/francescocolonnese/Desktop/wilkinsonTEST1/polynomial.h
+/Users/arman/git/wilkinsonTEST1/polynomial.h
 fstream
 -
 cstdlib
@@ -48,15 +48,15 @@ vector
 algorithm
 -
 term.h
-/Users/francescocolonnese/Desktop/wilkinsonTEST1/term.h
+/Users/arman/git/wilkinsonTEST1/term.h
 
-/Users/francescocolonnese/Desktop/wilkinsonTEST1/term.cpp
+/Users/arman/git/wilkinsonTEST1/term.cpp
 term.h
-/Users/francescocolonnese/Desktop/wilkinsonTEST1/term.h
+/Users/arman/git/wilkinsonTEST1/term.h
 sstream
 -
 
-/Users/francescocolonnese/Desktop/wilkinsonTEST1/term.h
+/Users/arman/git/wilkinsonTEST1/term.h
 iostream
 -
 fstream
@@ -66,5 +66,5 @@ cmath
 cstdlib
 -
 fraction.h
-/Users/francescocolonnese/Desktop/wilkinsonTEST1/fraction.h
+/Users/arman/git/wilkinsonTEST1/fraction.h
 

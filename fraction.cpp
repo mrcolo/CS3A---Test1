@@ -125,9 +125,12 @@ int fraction::getDenom() const//Accessor
 {
     return denom;
 }
-double fraction::toDouble() const{
+
+double fraction::toDouble() const
+{
     return (num/denom);
 }
+
 void fraction::display() const//Display values
 {
     cout<<num;
