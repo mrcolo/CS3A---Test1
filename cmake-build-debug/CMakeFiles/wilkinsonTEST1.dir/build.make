@@ -43,10 +43,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/arman/git/wilkinsonTEST1
+CMAKE_SOURCE_DIR = /Users/francescocolonnese/Desktop/wilkinsonTEST1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/arman/git/wilkinsonTEST1/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/francescocolonnese/Desktop/wilkinsonTEST1/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/wilkinsonTEST1.dir/depend.make
@@ -59,16 +59,16 @@ include CMakeFiles/wilkinsonTEST1.dir/flags.make
 
 CMakeFiles/wilkinsonTEST1.dir/fraction.cpp.o: CMakeFiles/wilkinsonTEST1.dir/flags.make
 CMakeFiles/wilkinsonTEST1.dir/fraction.cpp.o: ../fraction.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/arman/git/wilkinsonTEST1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/wilkinsonTEST1.dir/fraction.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/wilkinsonTEST1.dir/fraction.cpp.o -c /Users/arman/git/wilkinsonTEST1/fraction.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/francescocolonnese/Desktop/wilkinsonTEST1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/wilkinsonTEST1.dir/fraction.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/wilkinsonTEST1.dir/fraction.cpp.o -c /Users/francescocolonnese/Desktop/wilkinsonTEST1/fraction.cpp
 
 CMakeFiles/wilkinsonTEST1.dir/fraction.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/wilkinsonTEST1.dir/fraction.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/arman/git/wilkinsonTEST1/fraction.cpp > CMakeFiles/wilkinsonTEST1.dir/fraction.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/francescocolonnese/Desktop/wilkinsonTEST1/fraction.cpp > CMakeFiles/wilkinsonTEST1.dir/fraction.cpp.i
 
 CMakeFiles/wilkinsonTEST1.dir/fraction.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/wilkinsonTEST1.dir/fraction.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/arman/git/wilkinsonTEST1/fraction.cpp -o CMakeFiles/wilkinsonTEST1.dir/fraction.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/francescocolonnese/Desktop/wilkinsonTEST1/fraction.cpp -o CMakeFiles/wilkinsonTEST1.dir/fraction.cpp.s
 
 CMakeFiles/wilkinsonTEST1.dir/fraction.cpp.o.requires:
 
@@ -83,16 +83,16 @@ CMakeFiles/wilkinsonTEST1.dir/fraction.cpp.o.provides.build: CMakeFiles/wilkinso
 
 CMakeFiles/wilkinsonTEST1.dir/fractionfriends.cpp.o: CMakeFiles/wilkinsonTEST1.dir/flags.make
 CMakeFiles/wilkinsonTEST1.dir/fractionfriends.cpp.o: ../fractionfriends.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/arman/git/wilkinsonTEST1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/wilkinsonTEST1.dir/fractionfriends.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/wilkinsonTEST1.dir/fractionfriends.cpp.o -c /Users/arman/git/wilkinsonTEST1/fractionfriends.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/francescocolonnese/Desktop/wilkinsonTEST1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/wilkinsonTEST1.dir/fractionfriends.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/wilkinsonTEST1.dir/fractionfriends.cpp.o -c /Users/francescocolonnese/Desktop/wilkinsonTEST1/fractionfriends.cpp
 
 CMakeFiles/wilkinsonTEST1.dir/fractionfriends.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/wilkinsonTEST1.dir/fractionfriends.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/arman/git/wilkinsonTEST1/fractionfriends.cpp > CMakeFiles/wilkinsonTEST1.dir/fractionfriends.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/francescocolonnese/Desktop/wilkinsonTEST1/fractionfriends.cpp > CMakeFiles/wilkinsonTEST1.dir/fractionfriends.cpp.i
 
 CMakeFiles/wilkinsonTEST1.dir/fractionfriends.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/wilkinsonTEST1.dir/fractionfriends.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/arman/git/wilkinsonTEST1/fractionfriends.cpp -o CMakeFiles/wilkinsonTEST1.dir/fractionfriends.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/francescocolonnese/Desktop/wilkinsonTEST1/fractionfriends.cpp -o CMakeFiles/wilkinsonTEST1.dir/fractionfriends.cpp.s
 
 CMakeFiles/wilkinsonTEST1.dir/fractionfriends.cpp.o.requires:
 
@@ -107,16 +107,16 @@ CMakeFiles/wilkinsonTEST1.dir/fractionfriends.cpp.o.provides.build: CMakeFiles/w
 
 CMakeFiles/wilkinsonTEST1.dir/main.cpp.o: CMakeFiles/wilkinsonTEST1.dir/flags.make
 CMakeFiles/wilkinsonTEST1.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/arman/git/wilkinsonTEST1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/wilkinsonTEST1.dir/main.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/wilkinsonTEST1.dir/main.cpp.o -c /Users/arman/git/wilkinsonTEST1/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/francescocolonnese/Desktop/wilkinsonTEST1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/wilkinsonTEST1.dir/main.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/wilkinsonTEST1.dir/main.cpp.o -c /Users/francescocolonnese/Desktop/wilkinsonTEST1/main.cpp
 
 CMakeFiles/wilkinsonTEST1.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/wilkinsonTEST1.dir/main.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/arman/git/wilkinsonTEST1/main.cpp > CMakeFiles/wilkinsonTEST1.dir/main.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/francescocolonnese/Desktop/wilkinsonTEST1/main.cpp > CMakeFiles/wilkinsonTEST1.dir/main.cpp.i
 
 CMakeFiles/wilkinsonTEST1.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/wilkinsonTEST1.dir/main.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/arman/git/wilkinsonTEST1/main.cpp -o CMakeFiles/wilkinsonTEST1.dir/main.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/francescocolonnese/Desktop/wilkinsonTEST1/main.cpp -o CMakeFiles/wilkinsonTEST1.dir/main.cpp.s
 
 CMakeFiles/wilkinsonTEST1.dir/main.cpp.o.requires:
 
@@ -131,16 +131,16 @@ CMakeFiles/wilkinsonTEST1.dir/main.cpp.o.provides.build: CMakeFiles/wilkinsonTES
 
 CMakeFiles/wilkinsonTEST1.dir/polynomial.cpp.o: CMakeFiles/wilkinsonTEST1.dir/flags.make
 CMakeFiles/wilkinsonTEST1.dir/polynomial.cpp.o: ../polynomial.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/arman/git/wilkinsonTEST1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/wilkinsonTEST1.dir/polynomial.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/wilkinsonTEST1.dir/polynomial.cpp.o -c /Users/arman/git/wilkinsonTEST1/polynomial.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/francescocolonnese/Desktop/wilkinsonTEST1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/wilkinsonTEST1.dir/polynomial.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/wilkinsonTEST1.dir/polynomial.cpp.o -c /Users/francescocolonnese/Desktop/wilkinsonTEST1/polynomial.cpp
 
 CMakeFiles/wilkinsonTEST1.dir/polynomial.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/wilkinsonTEST1.dir/polynomial.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/arman/git/wilkinsonTEST1/polynomial.cpp > CMakeFiles/wilkinsonTEST1.dir/polynomial.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/francescocolonnese/Desktop/wilkinsonTEST1/polynomial.cpp > CMakeFiles/wilkinsonTEST1.dir/polynomial.cpp.i
 
 CMakeFiles/wilkinsonTEST1.dir/polynomial.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/wilkinsonTEST1.dir/polynomial.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/arman/git/wilkinsonTEST1/polynomial.cpp -o CMakeFiles/wilkinsonTEST1.dir/polynomial.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/francescocolonnese/Desktop/wilkinsonTEST1/polynomial.cpp -o CMakeFiles/wilkinsonTEST1.dir/polynomial.cpp.s
 
 CMakeFiles/wilkinsonTEST1.dir/polynomial.cpp.o.requires:
 
@@ -155,16 +155,16 @@ CMakeFiles/wilkinsonTEST1.dir/polynomial.cpp.o.provides.build: CMakeFiles/wilkin
 
 CMakeFiles/wilkinsonTEST1.dir/term.cpp.o: CMakeFiles/wilkinsonTEST1.dir/flags.make
 CMakeFiles/wilkinsonTEST1.dir/term.cpp.o: ../term.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/arman/git/wilkinsonTEST1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/wilkinsonTEST1.dir/term.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/wilkinsonTEST1.dir/term.cpp.o -c /Users/arman/git/wilkinsonTEST1/term.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/francescocolonnese/Desktop/wilkinsonTEST1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/wilkinsonTEST1.dir/term.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/wilkinsonTEST1.dir/term.cpp.o -c /Users/francescocolonnese/Desktop/wilkinsonTEST1/term.cpp
 
 CMakeFiles/wilkinsonTEST1.dir/term.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/wilkinsonTEST1.dir/term.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/arman/git/wilkinsonTEST1/term.cpp > CMakeFiles/wilkinsonTEST1.dir/term.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/francescocolonnese/Desktop/wilkinsonTEST1/term.cpp > CMakeFiles/wilkinsonTEST1.dir/term.cpp.i
 
 CMakeFiles/wilkinsonTEST1.dir/term.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/wilkinsonTEST1.dir/term.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/arman/git/wilkinsonTEST1/term.cpp -o CMakeFiles/wilkinsonTEST1.dir/term.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/francescocolonnese/Desktop/wilkinsonTEST1/term.cpp -o CMakeFiles/wilkinsonTEST1.dir/term.cpp.s
 
 CMakeFiles/wilkinsonTEST1.dir/term.cpp.o.requires:
 
@@ -195,7 +195,7 @@ wilkinsonTEST1: CMakeFiles/wilkinsonTEST1.dir/polynomial.cpp.o
 wilkinsonTEST1: CMakeFiles/wilkinsonTEST1.dir/term.cpp.o
 wilkinsonTEST1: CMakeFiles/wilkinsonTEST1.dir/build.make
 wilkinsonTEST1: CMakeFiles/wilkinsonTEST1.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/arman/git/wilkinsonTEST1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable wilkinsonTEST1"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/francescocolonnese/Desktop/wilkinsonTEST1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable wilkinsonTEST1"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/wilkinsonTEST1.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -216,6 +216,6 @@ CMakeFiles/wilkinsonTEST1.dir/clean:
 .PHONY : CMakeFiles/wilkinsonTEST1.dir/clean
 
 CMakeFiles/wilkinsonTEST1.dir/depend:
-	cd /Users/arman/git/wilkinsonTEST1/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/arman/git/wilkinsonTEST1 /Users/arman/git/wilkinsonTEST1 /Users/arman/git/wilkinsonTEST1/cmake-build-debug /Users/arman/git/wilkinsonTEST1/cmake-build-debug /Users/arman/git/wilkinsonTEST1/cmake-build-debug/CMakeFiles/wilkinsonTEST1.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/francescocolonnese/Desktop/wilkinsonTEST1/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/francescocolonnese/Desktop/wilkinsonTEST1 /Users/francescocolonnese/Desktop/wilkinsonTEST1 /Users/francescocolonnese/Desktop/wilkinsonTEST1/cmake-build-debug /Users/francescocolonnese/Desktop/wilkinsonTEST1/cmake-build-debug /Users/francescocolonnese/Desktop/wilkinsonTEST1/cmake-build-debug/CMakeFiles/wilkinsonTEST1.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/wilkinsonTEST1.dir/depend
 

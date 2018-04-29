@@ -4,11 +4,11 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/arman/git/wilkinsonTEST1/fraction.cpp" "/Users/arman/git/wilkinsonTEST1/cmake-build-debug/CMakeFiles/wilkinsonTEST1.dir/fraction.cpp.o"
-  "/Users/arman/git/wilkinsonTEST1/fractionfriends.cpp" "/Users/arman/git/wilkinsonTEST1/cmake-build-debug/CMakeFiles/wilkinsonTEST1.dir/fractionfriends.cpp.o"
-  "/Users/arman/git/wilkinsonTEST1/main.cpp" "/Users/arman/git/wilkinsonTEST1/cmake-build-debug/CMakeFiles/wilkinsonTEST1.dir/main.cpp.o"
-  "/Users/arman/git/wilkinsonTEST1/polynomial.cpp" "/Users/arman/git/wilkinsonTEST1/cmake-build-debug/CMakeFiles/wilkinsonTEST1.dir/polynomial.cpp.o"
-  "/Users/arman/git/wilkinsonTEST1/term.cpp" "/Users/arman/git/wilkinsonTEST1/cmake-build-debug/CMakeFiles/wilkinsonTEST1.dir/term.cpp.o"
+  "/Users/francescocolonnese/Desktop/wilkinsonTEST1/fraction.cpp" "/Users/francescocolonnese/Desktop/wilkinsonTEST1/cmake-build-debug/CMakeFiles/wilkinsonTEST1.dir/fraction.cpp.o"
+  "/Users/francescocolonnese/Desktop/wilkinsonTEST1/fractionfriends.cpp" "/Users/francescocolonnese/Desktop/wilkinsonTEST1/cmake-build-debug/CMakeFiles/wilkinsonTEST1.dir/fractionfriends.cpp.o"
+  "/Users/francescocolonnese/Desktop/wilkinsonTEST1/main.cpp" "/Users/francescocolonnese/Desktop/wilkinsonTEST1/cmake-build-debug/CMakeFiles/wilkinsonTEST1.dir/main.cpp.o"
+  "/Users/francescocolonnese/Desktop/wilkinsonTEST1/polynomial.cpp" "/Users/francescocolonnese/Desktop/wilkinsonTEST1/cmake-build-debug/CMakeFiles/wilkinsonTEST1.dir/polynomial.cpp.o"
+  "/Users/francescocolonnese/Desktop/wilkinsonTEST1/term.cpp" "/Users/francescocolonnese/Desktop/wilkinsonTEST1/cmake-build-debug/CMakeFiles/wilkinsonTEST1.dir/term.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 
