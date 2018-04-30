@@ -21,6 +21,7 @@ typedef void (*argptr)(char*[], polynomial[], string&, bool&, string, stack<Stat
 //HELPER FUNCTIONS --- CONTROLLER
 void getInput(const string& prompt, string& line, vector<string> &str);
 void evalCommand(string line, polynomial polys [26],stack<StateStruct>& g_StateStack);
+void clearStack(stack<StateStruct>& g_StateStack);
 void cleanInput(string& line);
 bool fileExists(const string& filename);
 int getDerivation(string s );
@@ -33,6 +34,7 @@ void save(string line, polynomial polys [26], string ALPHABET);
 void load(string line, polynomial polys [26], string ALPHABET);
 void help(string line, polynomial polys [26], string ALPHABET);
 void err(string line, polynomial polys [26], string ALPHABET);
+void exit(string line, polynomial polys [26], string ALPHABET);
 
 //Functions for cmd line args -- ARGS
 void handleArg(int argc,char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack);
@@ -49,6 +51,7 @@ int main(int argc, char* argv[]) {
     string command, record_filename;
     bool recording = false;
 
+
     //CONSTANT VARS
     const string WELCOMEMSG = "Welcome to Expression Calculator. If you don't know what to do, type HELP.\n",
                  INPUTPROMPT = "INPUT: ";
@@ -61,7 +64,6 @@ int main(int argc, char* argv[]) {
     catch(string& e){
         cout<<"ERROR:"<<endl<<e<<endl<<endl;
     }
-
     //DISPLAY WELCOME MSG
     cout<<WELCOMEMSG<<endl;
     //START ITERATION CONTROLLER
@@ -70,15 +72,20 @@ int main(int argc, char* argv[]) {
         try {
             getInput(INPUTPROMPT, command, strRecord);
             evalCommand(command, polys, g_StateStack);
-            if(!isExiting(command))
+
+            if(!isExiting(command)){
                 g_StateStack.top().f(command, polys, ALPHABET);
+            }
+            else{
+                clearStack(g_StateStack);
+            }
+
         }
         catch (string& e) {
             cout << "ERROR:"<<endl<<e<<endl<<endl;
         }
         
         if(g_StateStack.size() == 2){
-
             g_StateStack.pop();
         }
     } while(!g_StateStack.empty());
@@ -108,7 +115,7 @@ void evalCommand(string line, polynomial polys[26], stack<StateStruct>& g_StateS
 
     const string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    StateStruct LET,EVAL,PRINT,SAVE,LOAD,HELP,ERR;
+    StateStruct LET,EVAL,PRINT,SAVE,LOAD,HELP,ERR,EXIT;
 
     LET.f = &let;
     EVAL.f = &eval;
@@ -118,13 +125,13 @@ void evalCommand(string line, polynomial polys[26], stack<StateStruct>& g_StateS
     HELP.f = &help;
     ERR.f = &err;
 
+
     string command(line.substr(0,line.find(' ')));
 
     //turns string to uppercase
     for (char &i : command)
         i = toupper(i);
 
-    //TODO use function pointers to execute rather than if statements
     if(command == "LET"){
         g_StateStack.push(LET);
     }
@@ -144,18 +151,17 @@ void evalCommand(string line, polynomial polys[26], stack<StateStruct>& g_StateS
     }
     else if(command == "EXIT" || command == ""){
         cout<<"Exiting Expression Calculator..."<<endl;
-        g_StateStack.pop();
-
     }
     else if(command == "HELP"){
         g_StateStack.push(HELP);
-
     }
-    else
-    {
+    else{
         g_StateStack.push(ERR);
-
     }
+}
+void clearStack(stack<StateStruct>& g_StateStack){
+    for(int i = 0; i< g_StateStack.size();i++)
+        g_StateStack.pop();
 }
 void cleanInput(string& line){
     for(int i = 0; true; i++){
@@ -215,7 +221,7 @@ void handleArg(int argc,char* argv[], polynomial polys[26], string& record_filen
         string exception = "OVERLOAD OF ARGUMENTS";
         throw exception;
     }
-    else{
+    else if (argc == 2 || argc == 3){
         argfunctions[argc - 2](argv, polys, record_filename, recording, ALPHABET, g_StateStack);
     }
 }
@@ -386,5 +392,9 @@ void err(string line, polynomial polys [26], string ALPHABET){
     string exception = "BAD_INPUT";
     throw exception;
 }
+void exit(string line, polynomial polys [26], string ALPHABET){
+
+}
+
 
 
