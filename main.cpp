@@ -155,6 +155,10 @@ void evalCommand(string line, polynomial polys[26]){
             infile.close();
         }
         //TODO add a few couts that explain what the program is doing
+        else {
+            string file_error = "FILE_DOESNT_EXIST";
+            throw file_error;
+        }
     }
     else if(command == "EXIT" || command == ""){
         cout<<"Exiting Expression Calculator..."<<endl;
