@@ -2,24 +2,30 @@
 #include "polynomial.h"
 #include <vector>
 #include <string>
-#include <stdio.h>
-#include <stdlib.h>
 #include <sstream>
 #include <stack>
 
 using namespace std;
 
+//DEFINE FUNCTION POINTER FOR STATE CONTROLLER
 typedef void (*fptr)(string, polynomial [], string);
 
-static struct StateStruct {
+//struct for STATE CONTROLLER
+struct StateStruct {
     fptr f;
 };
+
+
+typedef void (*argptr)(char*[], polynomial[], string&, bool&, string, stack<StateStruct>&);
+
+//Functions for controller --- CONTROLLER
 void getInput(const string& prompt, string& line, vector<string> &str);
 void evalCommand(string line, polynomial polys [26],stack<StateStruct>& g_StateStack);
 void cleanInput(string& line);
 bool fileExists(const string& filename);
 int getDerivation(string s );
 
+//Functions returning from pointer --- ACTIONS
 void let(string line, polynomial polys [26], string ALPHABET);
 void eval(string line, polynomial polys [26], string ALPHABET);
 void print(string line, polynomial polys [26], string ALPHABET);
@@ -28,13 +34,14 @@ void load(string line, polynomial polys [26], string ALPHABET);
 void help(string line, polynomial polys [26], string ALPHABET);
 void err(string line, polynomial polys [26], string ALPHABET);
 
-void oneArg(char* argv[], polynomial polys[26]);
+//Functions for cmd line args -- ARGS
+void handleArg(int argc,char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack);
+void oneArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack);
 void twoArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack);
-
-
 
 int main(int argc, char* argv[]) {
 
+    //INITIAL CONTAINERS FOR DATA
     stack<StateStruct> g_StateStack;
     polynomial polys [26];
     vector<string> strRecord;
@@ -42,32 +49,23 @@ int main(int argc, char* argv[]) {
     string command, record_filename;
     bool recording = false;
 
+    //CONSTANT VARS
     const string WELCOMEMSG = "Welcome to Expression Calculator. If you don't know what to do, type HELP.\n",
                  INPUTPROMPT = "INPUT: ";
-
-
     const string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    //TODO Create Functions for each case.
-    switch (argc){
-        case 2:
-            cout<<"Loading "<<argv[1]<<endl;
-            oneArg(argv, polys);
-            break;
-        case 3:
-            cout<<argv[1]<<" "<<argv[2]<<endl;
-            twoArg(argv, polys, record_filename, recording, ALPHABET, g_StateStack);
-            break;
-        default:
-            if(argc>3)
-                cout<<"ERROR: TOO MANY ARGUMENTS IN COMMAND LINE"<<endl;
-            break;
+    //HANDLE ARGUMENTS
+    try{
+        handleArg(argc,argv, polys, record_filename, recording, ALPHABET, g_StateStack);
+    }
+    catch(string& e){
+        cout<<"ERROR:"<<endl<<e<<endl<<endl;
     }
 
-    //App starts
+    //DISPLAY WELCOME MSG
     cout<<WELCOMEMSG<<endl;
 
-    //Basic Controller
+    //START ITERATION CONTROLLER
     do{
         try {
             getInput(INPUTPROMPT, command, strRecord);
@@ -81,10 +79,8 @@ int main(int argc, char* argv[]) {
         if(g_StateStack.size() == 2){
             g_StateStack.pop();
         }
-        
-    } while(!g_StateStack.empty());
 
-    //TODO save;
+    } while(!g_StateStack.empty());
 
     if(recording) {
         ofstream outfile;
@@ -188,7 +184,9 @@ int getDerivation(string s ) {
     return counter;
 }
 
-void oneArg(char* argv[], polynomial polys[26]) {
+void oneArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack) {
+
+    cout<<"Loading "<<argv[1]<<endl;
     if(fileExists(argv[1])) {
         string expression;
         int lineNumber = 0;
@@ -208,6 +206,7 @@ void oneArg(char* argv[], polynomial polys[26]) {
 
 void twoArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack) {
 
+    cout<<argv[1]<<" "<<argv[2]<<endl;
     if(argv[1] == "EXECUTE") {
         if(fileExists(argv[2])) {
             string expression;
@@ -369,4 +368,18 @@ void err(string line, polynomial polys [26], string ALPHABET){
     string exception = "BAD_INPUT";
     throw exception;
 }
+
+void handleArg(int argc,char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack){
+
+    argptr argfunctions [2] = {&oneArg,&twoArg};
+
+    if(argc > 3){
+        string exception = "OVERLOAD OF ARGUMENTS";
+        throw exception;
+    }
+    else{
+        argfunctions[argc - 2](argv, polys, record_filename, recording, ALPHABET, g_StateStack);
+    }
+}
+
 
