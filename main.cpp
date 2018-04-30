@@ -5,32 +5,40 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sstream>
-
+#include <stack>
 using namespace std;
 
 typedef void (*fptr)(string, polynomial [], string);
 
+struct StateStruct {
+    fptr f;
+};
+
 string getInput(const string prompt, string& line);
-void evalCommand(string line, polynomial polys [26],fptr f[7]);
+void evalCommand(string line, polynomial polys [26],stack<StateStruct>& g_StateStack);
 bool exitCondition(string line);
 void cleanInput(string& line);
 bool fileExists(const string& filename);
 int getDerivation(string s );
 
-void LET(string line, polynomial polys [26], string ALPHABET);
-void EVAL(string line, polynomial polys [26], string ALPHABET);
-void PRINT(string line, polynomial polys [26], string ALPHABET);
-void SAVE(string line, polynomial polys [26], string ALPHABET);
-void LOAD(string line, polynomial polys [26], string ALPHABET);
-void HELP(string line, polynomial polys [26], string ALPHABET);
-void EXIT(string line, polynomial polys [26], string ALPHABET);
+void let(string line, polynomial polys [26], string ALPHABET);
+void eval(string line, polynomial polys [26], string ALPHABET);
+void print(string line, polynomial polys [26], string ALPHABET);
+void save(string line, polynomial polys [26], string ALPHABET);
+void load(string line, polynomial polys [26], string ALPHABET);
+void help(string line, polynomial polys [26], string ALPHABET);
+void exit(string line, polynomial polys [26], string ALPHABET);
+
+stack<StateStruct> g_StateStack;
 
 int main(int argc, char* argv[]){
 
     const string WELCOMEMSG = "Welcome to Expression Calculator. If you don't know what to do, type HELP.\n",
                  INPUTPROMPT = "INPUT: ";
 
-     fptr commands[7] = {&LET,&EVAL,&PRINT,&SAVE,&LOAD,&HELP,&EXIT};
+    const string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+     //fptr commands[7] = {&let,&eval,&print,&save,&load,&help, &exit};
     //TODO Create Functions for each case.
     switch (argc){
         case 2:
@@ -48,9 +56,11 @@ int main(int argc, char* argv[]){
 
     //Basic Controller
     do{
-        try {
-            evalCommand(getInput(INPUTPROMPT, command), polys, commands);
 
+        try {
+            command = getInput(INPUTPROMPT,command);
+            evalCommand(command, polys ,g_StateStack);
+            g_StateStack.top().f(command ,polys, ALPHABET); 
         }
         catch (string& e){
             cout << "ERROR:"<<endl<<e<<endl<<endl;
@@ -74,10 +84,19 @@ string getInput(const string prompt, string& line){
     return line;
 }
 
-void evalCommand(string line, polynomial polys[26], fptr f[7]){
+void evalCommand(string line, polynomial polys[26], stack<StateStruct>& g_StateStack){
 
     const string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
+    StateStruct LET,EVAL,PRINT,SAVE,LOAD,HELP,EXIT;
+
+    LET.f = &let;
+    EVAL.f = &eval;
+    PRINT.f = &print;
+    SAVE.f = &save;
+    LOAD.f = &load;
+    HELP.f = &help;
+    EXIT.f = &exit;
 
     string command(line.substr(0,line.find(' ')));
 
@@ -85,29 +104,27 @@ void evalCommand(string line, polynomial polys[26], fptr f[7]){
     for(int i = 0; i < command.length(); i++ )
         command[i] = toupper(command[i]);
 
-    //f[choice](v);
-
     //TODO use function pointers to execute rather than if statements
     if(command == "LET"){
-        f[0](line,polys,ALPHABET);
+        g_StateStack.push(LET);
     }
     else if(command == "EVAL"){
-        f[1](line,polys,ALPHABET);
+        g_StateStack.push(EVAL);
     }
     else if(command == "PRINT"){
-        f[2](line,polys,ALPHABET);
+        g_StateStack.push(PRINT);
     }
     else if(command == "SAVE") {
-        f[3](line,polys,ALPHABET);
+        g_StateStack.push(SAVE);
     }
     else if(command == "LOAD") {
-        f[4](line,polys,ALPHABET);
+        g_StateStack.push(LOAD);
     }
     else if(command == "EXIT" || command == ""){
-        f[6](line,polys,ALPHABET);
+        g_StateStack.push(EXIT);
     }
     else if(command == "HELP"){
-        f[5](line,polys,ALPHABET);
+        g_StateStack.push(HELP);
     }
     else
     {
@@ -152,7 +169,7 @@ int getDerivation(string s ) {
     return counter;
 }
 
-void LET(string line, polynomial polys [26], string ALPHABET){
+void let(string line, polynomial polys [26], string ALPHABET){
     string exception;
     size_t pos;
 
@@ -172,7 +189,7 @@ void LET(string line, polynomial polys [26], string ALPHABET){
         throw exception;
     }
 }
-void EVAL(string line, polynomial polys [26], string ALPHABET){
+void eval(string line, polynomial polys [26], string ALPHABET){
     string current_eval = line.substr(line.find("EVAL")+6,string::npos);
 
     current_eval[0] = toupper(current_eval[0]);
@@ -180,7 +197,7 @@ void EVAL(string line, polynomial polys [26], string ALPHABET){
     polys[ALPHABET.find(current_eval[0])].evaluate(atoi(&current_eval[2]));
 
 }
-void PRINT(string line, polynomial polys [26], string ALPHABET){
+void print(string line, polynomial polys [26], string ALPHABET){
     string current_print = line.substr(line.find("PRINT")+7,string::npos);
 
     if(current_print.length() == 1){
@@ -232,7 +249,7 @@ void PRINT(string line, polynomial polys [26], string ALPHABET){
         }
     }
 }
-void SAVE(string line, polynomial polys [26], string ALPHABET){
+void save(string line, polynomial polys [26], string ALPHABET){
     string outfile_name(line.substr(line.find("SAVE")+6, string::npos));
 
     if(fileExists(outfile_name)) {
@@ -249,7 +266,7 @@ void SAVE(string line, polynomial polys [26], string ALPHABET){
     }
 
 }
-void LOAD(string line, polynomial polys [26], string ALPHABET){
+void load(string line, polynomial polys [26], string ALPHABET){
 
     string infile_name(line.substr(line.find("LOAD")+6, string::npos));
 
@@ -272,7 +289,7 @@ void LOAD(string line, polynomial polys [26], string ALPHABET){
     }
 
 }
-void HELP(string line, polynomial polys [26], string ALPHABET){
+void help(string line, polynomial polys [26], string ALPHABET){
     const string INSTRUCTIONS =
             "POSSIBLE INSTRUCTIONS: \n\n"
                     "- LET  => Stores algebraic expression as capital letter A-Z\n\n"
@@ -288,7 +305,7 @@ void HELP(string line, polynomial polys [26], string ALPHABET){
 
     cout<<INSTRUCTIONS<<endl;
 }
-void EXIT(string line, polynomial polys [26], string ALPHABET){
+void exit(string line, polynomial polys [26], string ALPHABET){
     cout<<"Exiting Expression Calculator..."<<endl;
     return;
 }
