@@ -1,11 +1,16 @@
 #include <iostream>
 #include "polynomial.h"
 #include <vector>
-
+#include <string>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sstream>
 using namespace std;
 
 string getInput(const string prompt, string& line);
 void evalCommand(string line, polynomial polys [26]);
+bool exitCondition(string line);
+void cleanInput(string& line);
 
 int main(int argc, char* argv[]){
 
@@ -24,7 +29,7 @@ int main(int argc, char* argv[]){
             cout<<"Two arguments!"<<argv[2]<<endl;
     }
 
-    string command;
+    string command = "";
 
     //App starts
     cout<<WELCOMEMSG<<endl;
@@ -32,21 +37,24 @@ int main(int argc, char* argv[]){
     //Basic Controller
     do{
         try {
+
             evalCommand(getInput(INPUTPROMPT, command), polys);
-            polys['F'];
+
         }
         catch (string& e){
             cout << "ERROR:"<<endl<<e<<endl;
         }
 
-    }while(command != "EXIT");
+    }while(exitCondition(command));
 
+    //TODO save;
     return 0;
 }
 
 string getInput(const string prompt, string& line){
     cout<<prompt;
     getline(cin, line);
+    cleanInput(line);
     cout<<endl;
     return line;
 }
@@ -78,6 +86,7 @@ void evalCommand(string line, polynomial polys[26]){
         string exception;
         size_t pos;
 
+
         if((pos = line.find('=')) != string::npos){
             char current_exp = toupper(line[pos-2]);
 
@@ -93,21 +102,25 @@ void evalCommand(string line, polynomial polys[26]){
             throw exception;
         }
     }
-    else if(command == "EVAL")
-    {
-        cout<<"input: EVAL/eval"<<endl;
+    else if(command == "EVAL"){
+
+        string current_eval = line.substr(line.find("EVAL")+6,string::npos);
+
+        current_eval[0] = toupper(current_eval[0]);
+
+        polys[ALPHABET.find(current_eval[0])].evaluate(atoi(&current_eval[2]));
+
     }
-    else if(command == "PRINT")
-    {
+    else if(command == "PRINT"){
         cout<<"input: PRINT/print"<<endl;
     }
     else if(command == "SAVE"){
-        cout<<INSTRUCTIONS<<endl;
+
     }
     else if(command == "LOAD"){
-        cout<<INSTRUCTIONS<<endl;
+
     }
-    else if(command == "EXIT"){
+    else if(command == "EXIT" || command == ""){
         cout<<"Exiting Expression Calculator..."<<endl;
         return;
     }
@@ -120,4 +133,26 @@ void evalCommand(string line, polynomial polys[26]){
         throw exception;
     }
 }
+
+bool exitCondition(string line){
+    for(int i = 0; i < line.length();i++)
+        line[i] = toupper(line[i]);
+
+    return (line != "EXIT" && line != "");
+
+}
+
+void cleanInput(string& line){
+    for(int i = 0; 1; i++){
+        if(line[i] == ' ') {
+            line = line.substr(i, string::npos);
+        }
+        else{
+            line = line.substr(i , string::npos);
+            break;
+        }
+    }
+    cout<<line<<endl;
+}
+
 

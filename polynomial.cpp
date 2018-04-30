@@ -67,7 +67,7 @@ void polynomial::deleteAll()
 
 void polynomial::evaluate(int number){
     int sum = 0;
-    cout<<"Evaluating Polynomial ("<<*this<<") at number "<<number<<"..."<<endl;
+    cout<<"Evaluating Expression ("<<*this<<") at number "<<number<<"..."<<endl;
     for(int i = 0; i< poly.size();i++){
         sum += poly[i].getCoeff()*pow(number,poly[i].getPower());
     }
