@@ -1,27 +1,4 @@
 # Wilkinson - Test 1
-The Idea:
-
-QED Services International, Inc, was contracted by Whitewater Unified School District to write an Expression Calculator to help their students learn basic algebra through calculus. As in the project was quite large in its scope, QED Services International, Inc, has subcontracted you to finish writing a “proof of concept” program for them. Under a previous contract, you’ve written a class for them, called fraction, but due to an excessive amount work, they have had to subcontract this entire portion of the project to you.
-
-As we know, an Algebraic Expression consists of at least one term, where a term consists of constants multiplied by a variable raised to a power. Constants and powers, per the contract QED Services International, Inc, signed with you can be  positive or negative fractions, positive or negative decimals, or positive or negative integers.
-
-The goal of this project is for you to develop a "command line" Algebraic Expression calculator that will accept up to 26 arbitrarily long algebraic expressions composed of terms, as described above.
-
-The program, named calculate, if started on the command line with no parameters, when ready for input, a prompt such as INPUT: or COMMAND: must be printed. After each successful operation, this prompt will re-appear asking for the next command. Naturally, if the user enters just the return key, then the program will terminate.
-
-When the COMMAND: or INPUT: prompt appears, the user will have the following options:
-
-2. They can enter one of the following:
-
-a. An expression, such as F = G + H, where F, G, and H are all pre-stored algebraic expressions. Upon completion, the program will print F = 2X + 4, for example.
-
-b. An expression, such as F = G - H, where F, G, and H are all pre-stored algebraic expressions. Upon completion, the program will print F = 2X + 4, for example.
-
-c. An expression, such as F = G * H, where F, G, and H are all pre-stored algebraic expressions. Upon completion, the program will print F = 2X + 4, for example
-
-d. An expression, such as F = G’, where G’ is the derivative of G. As with the proceeding, the resultant algebraic expression will be printed.
-
-e. This is the same as the above, but with the ability to enter an arbitrary derivative (such as F = G’’’). As with the proceeding, the resultant algebraic expression will be printed.
 
 Command Line Parameters:
 

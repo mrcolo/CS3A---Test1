@@ -12,12 +12,15 @@ void evalCommand(string line, polynomial polys [26]);
 bool exitCondition(string line);
 void cleanInput(string& line);
 bool fileExists(const string& filename);
+int getDerivation(string s );
 
 int main(int argc, char* argv[]){
 
     const string WELCOMEMSG = "Welcome to Expression Calculator. If you don't know what to do, type HELP.\n",
                  INPUTPROMPT = "INPUT: ";
     //TODO Create Functions for each case.
+    polynomial p ("2x^2");
+    cout<<p.returnDerivative(1);
 
     switch (argc){
         case 2:
@@ -126,7 +129,6 @@ void evalCommand(string line, polynomial polys[26]){
                 string instruction = current_print.substr(pos+2,string::npos);
 
                 char exp1,exp2,op;
-
                 if(instruction.find('\'') == string::npos){
                     exp1 = toupper(instruction[0]);
                     op = instruction [2];
@@ -151,15 +153,18 @@ void evalCommand(string line, polynomial polys[26]){
                             throw exception;
                     }
                 }
-
                 else{
-                    //getDerivative();
+                    int editFunctionIndex = ALPHABET.find(editFunction[0]);
+
+                    char receiver = toupper(instruction[0]);
+
+                    polys[editFunctionIndex] = polys[ALPHABET.find(receiver)].returnDerivative(getDerivation(instruction));
+
+                    cout<<editFunction<<" = "<<polys[ALPHABET.find(receiver)].returnDerivative(getDerivation(instruction))<<endl;
                 }
 
 
-                editFunction[0] = toupper(editFunction[0]);
 
-                int editFunctionIndex = ALPHABET.find(editFunction[0]);
 
 
             }
@@ -249,9 +254,10 @@ bool fileExists(const string &filename) {
 }
 
 int getDerivation(string s ) {
+
     int counter = 0;
 
-    for (int i = 0; s.length(); i++) {
+    for (int i = 0; i < s.length(); i++) {
         if (s[i] == '\'')
             counter++;
     }
