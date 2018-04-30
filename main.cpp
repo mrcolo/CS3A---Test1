@@ -136,7 +136,6 @@ void evalCommand(string line, polynomial polys[26]){
             }
             outfile.close();
         }
-        cout<<INSTRUCTIONS<<endl;
     }
     else if(command == "LOAD") {
         string infile_name(command.find("LOAD")+6, string::npos);
@@ -152,7 +151,10 @@ void evalCommand(string line, polynomial polys[26]){
             }
             infile.close();
         }
-        cout<<INSTRUCTIONS<<endl;
+        else {
+            string file_error = "FILE_DOESNT_EXIST";
+            throw file_error;
+        }
     }
     else if(command == "EXIT" || command == ""){
         cout<<"Exiting Expression Calculator..."<<endl;
