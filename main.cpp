@@ -5,16 +5,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sstream>
+
 using namespace std;
 
-string getInput(const string prompt, string& line);
-void evalCommand(string line, polynomial polys [26]);
+string getInput(const string& prompt, string& line, vector<string> &str);
+void evalCommand(string line, polynomial polys[26]);
 bool exitCondition(string line);
 void cleanInput(string& line);
 bool fileExists(const string& filename);
-int getDerivation(string s );
+int getDerivation(string s);
+void oneArg(char* argv[], polynomial polys[26]);
+void twoArg(char* argv[], polynomial polys[26], string record_filename, bool recording);
 
-int main(int argc, char* argv[]){
+int main(int argc, char* argv[]) {
+
+    polynomial polys [26];
+    vector<string> strRecord;
+    string command, record_filename;
+    bool recording = false;
 
     const string WELCOMEMSG = "Welcome to Expression Calculator. If you don't know what to do, type HELP.\n",
                  INPUTPROMPT = "INPUT: ";
@@ -22,23 +30,26 @@ int main(int argc, char* argv[]){
     //TODO Create Functions for each case.
     switch (argc){
         case 2:
-            cout<<"One Argument"<<argv[1]<<endl;
+            cout<<"One Argument! Loading "<<argv[1]<<endl;
+            oneArg(argv, polys);
             break;
         case 3:
-            cout<<"Two arguments!"<<argv[2]<<endl;
+            cout<<"Two arguments! "<<argv[1]<<" "<<argv[2]<<endl;
+            twoArg(argv, polys, record_filename, recording);
+            break;
+        default:
+            if(argc>3)
+                cout<<"ERROR: TOO MANY ARGUMENTS IN CddOMMAND LINE"<<endl;
+            break;
     }
-
-    string command = "";
 
     //App starts
     cout<<WELCOMEMSG<<endl;
-    polynomial polys [26];
 
     //Basic Controller
     do{
         try {
-            evalCommand(getInput(INPUTPROMPT, command), polys);
-
+            evalCommand(getInput(INPUTPROMPT, command, strRecord), polys);
         }
         catch (string& e){
             cout << "ERROR:"<<endl<<e<<endl;
@@ -47,17 +58,22 @@ int main(int argc, char* argv[]){
     }while(exitCondition(command));
 
     //TODO save;
-
+    if(recording) {
+        ofstream outfile;
+        outfile.open(record_filename);
+        for(const auto &i : strRecord) {
+            outfile<<i<<endl;
+        }
+        outfile.close();
+    }
     return 0;
 }
 
-string getInput(const string prompt, string& line){
-
+string getInput(const string& prompt, string& line, vector<string> &str){
     cout<<prompt;
     getline(cin, line);
-
     cleanInput(line);
-
+    str.push_back(line);
     cout<<endl;
     return line;
 }
@@ -80,8 +96,8 @@ void evalCommand(string line, polynomial polys[26]){
     string command(line.substr(0,line.find(' ')));
 
     //turns string to uppercase
-    for(int i = 0; i < command.length(); i++ )
-        command[i] = toupper(command[i]);
+    for (char &i : command)
+        i = toupper(i);
 
     //TODO use function pointers to execute rather than if statements
     if(command == "LET"){
@@ -179,8 +195,8 @@ void evalCommand(string line, polynomial polys[26]){
     else if(command == "SAVE") {
         string outfile_name(line.substr(line.find("SAVE")+6, string::npos));
         if(fileExists(outfile_name)) {
-            string filename_error = "FILENAME_ALREADY_EXISTS";
-            throw filename_error;
+            string filename_exists = "FILENAME_ALREADY_EXISTS";
+            throw filename_exists;
         }
         else {
             ofstream outfile;
@@ -194,7 +210,6 @@ void evalCommand(string line, polynomial polys[26]){
     }
     else if(command == "LOAD") {
         string infile_name(line.substr(line.find("LOAD")+6, string::npos));
-
         if(fileExists(infile_name)) {
             string expression;
             int lineNumber = 0;
@@ -202,7 +217,6 @@ void evalCommand(string line, polynomial polys[26]){
             infile.open(infile_name);
             while(getline(infile, expression)) {
                 polynomial temp_poly(expression);
-
                 polys[lineNumber] = temp_poly;
                 lineNumber++;
             }
@@ -210,8 +224,8 @@ void evalCommand(string line, polynomial polys[26]){
         }
         //TODO add a few couts that explain what the program is doing
         else {
-            string file_error = "FILE_DOESNT_EXIST";
-            throw file_error;
+            string file_find_error = "FILE_DOESNT_EXIST";
+            throw file_find_error;
         }
     }
     else if(command == "EXIT" || command == ""){
@@ -253,7 +267,7 @@ bool fileExists(const string &filename) {
     return infile.good();
 }
 
-int getDerivation(string s ) {
+int getDerivation(string s) {
 
     int counter = 0;
 
@@ -262,4 +276,48 @@ int getDerivation(string s ) {
             counter++;
     }
     return counter;
+}
+
+void oneArg(char* argv[], polynomial polys[26]) {
+    if(fileExists(argv[1])) {
+        string expression;
+        int lineNumber = 0;
+        ifstream infile;
+        infile.open(argv[1]);
+        while(getline(infile, expression)) {
+            polynomial temp_poly(expression);
+            polys[lineNumber] = temp_poly;
+            lineNumber++;
+        }
+        infile.close();
+    }
+    else {
+        cout<<"FILE_DOESNT_EXIST"<<endl;
+    }
+}
+
+void twoArg(char* argv[], polynomial polys[26], string record_filename, bool recording) {
+    if(argv[1] == "EXECUTE") {
+        if(fileExists(argv[2])) {
+            string expression;
+            ifstream infile;
+            infile.open(argv[2]);
+            while(getline(infile, expression)) {
+                evalCommand(expression, polys);
+            }
+            infile.close();
+        }
+    }
+    else if(argv[1] == "RECORD") {
+        if(fileExists(argv[2])) {
+            cout<<"FILENAME_ALREADY_EXISTS"<<endl;
+        }
+        else {
+            record_filename = argv[2];
+            recording = true;
+        }
+    }
+    else {
+        cout<<"ERROR: INCORRECT INPUT FORMAT"<<endl;
+    }
 }
