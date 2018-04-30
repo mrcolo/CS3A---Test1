@@ -6,17 +6,18 @@
 #include <stdlib.h>
 #include <sstream>
 #include <stack>
+
 using namespace std;
 
+string getInput(const string& prompt, string& line, vector<string> &str);
 typedef void (*fptr)(string, polynomial [], string);
 
-struct StateStruct {
+static struct StateStruct {
     fptr f;
 };
 
 string getInput(const string prompt, string& line);
 void evalCommand(string line, polynomial polys [26],stack<StateStruct>& g_StateStack);
-bool exitCondition(string line);
 void cleanInput(string& line);
 bool fileExists(const string& filename);
 int getDerivation(string s );
@@ -27,59 +28,83 @@ void print(string line, polynomial polys [26], string ALPHABET);
 void save(string line, polynomial polys [26], string ALPHABET);
 void load(string line, polynomial polys [26], string ALPHABET);
 void help(string line, polynomial polys [26], string ALPHABET);
-void exit(string line, polynomial polys [26], string ALPHABET);
+void err(string line, polynomial polys [26], string ALPHABET);
 
-stack<StateStruct> g_StateStack;
+void oneArg(char* argv[], polynomial polys[26]);
+void twoArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack);
 
-int main(int argc, char* argv[]){
+
+
+int main(int argc, char* argv[]) {
+
+    stack<StateStruct> g_StateStack;
+    polynomial polys [26];
+    vector<string> strRecord;
+
+    string command, record_filename;
+    bool recording = false;
 
     const string WELCOMEMSG = "Welcome to Expression Calculator. If you don't know what to do, type HELP.\n",
                  INPUTPROMPT = "INPUT: ";
 
+
     const string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-     //fptr commands[7] = {&let,&eval,&print,&save,&load,&help, &exit};
     //TODO Create Functions for each case.
     switch (argc){
         case 2:
-            cout<<"One Argument"<<argv[1]<<endl;
+            cout<<"Loading "<<argv[1]<<endl;
+            oneArg(argv, polys);
             break;
         case 3:
-            cout<<"Two arguments!"<<argv[2]<<endl;
+            cout<<argv[1]<<" "<<argv[2]<<endl;
+            twoArg(argv, polys, record_filename, recording, ALPHABET, g_StateStack);
+            break;
+        default:
+            if(argc>3)
+                cout<<"ERROR: TOO MANY ARGUMENTS IN COMMAND LINE"<<endl;
+            break;
     }
-
-    string command = "";
 
     //App starts
     cout<<WELCOMEMSG<<endl;
-    polynomial polys [26];
 
     //Basic Controller
     do{
-
         try {
-            command = getInput(INPUTPROMPT,command);
-            evalCommand(command, polys ,g_StateStack);
-            g_StateStack.top().f(command ,polys, ALPHABET); 
+            command = getInput(INPUTPROMPT, command, strRecord);
+            evalCommand(command, polys, g_StateStack);
+            g_StateStack.top().f(command, polys, ALPHABET);
         }
-        catch (string& e){
+        catch (string& e) {
             cout << "ERROR:"<<endl<<e<<endl<<endl;
         }
+        if(g_StateStack.size() == 2){
+            g_StateStack.pop();
+        }
 
-    }while(exitCondition(command));
+
+    } while(!g_StateStack.empty());
 
     //TODO save;
+
+    if(recording) {
+        ofstream outfile;
+        outfile.open(record_filename);
+        for(const auto &i : strRecord) {
+            outfile<<i<<endl;
+        }
+        outfile.close();
+    }
 
     return 0;
 }
 
-string getInput(const string prompt, string& line){
-
+string getInput(const string& prompt, string& line, vector<string> &str){
     cout<<prompt;
     getline(cin, line);
-
     cleanInput(line);
-
+    str.push_back(line);
     cout<<endl;
     return line;
 }
@@ -88,7 +113,7 @@ void evalCommand(string line, polynomial polys[26], stack<StateStruct>& g_StateS
 
     const string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    StateStruct LET,EVAL,PRINT,SAVE,LOAD,HELP,EXIT;
+    StateStruct LET,EVAL,PRINT,SAVE,LOAD,HELP,ERR;
 
     LET.f = &let;
     EVAL.f = &eval;
@@ -96,13 +121,13 @@ void evalCommand(string line, polynomial polys[26], stack<StateStruct>& g_StateS
     SAVE.f = &save;
     LOAD.f = &load;
     HELP.f = &help;
-    EXIT.f = &exit;
+    ERR.f = &err;
 
     string command(line.substr(0,line.find(' ')));
 
     //turns string to uppercase
-    for(int i = 0; i < command.length(); i++ )
-        command[i] = toupper(command[i]);
+    for (char &i : command)
+        i = toupper(i);
 
     //TODO use function pointers to execute rather than if statements
     if(command == "LET"){
@@ -113,36 +138,33 @@ void evalCommand(string line, polynomial polys[26], stack<StateStruct>& g_StateS
     }
     else if(command == "PRINT"){
         g_StateStack.push(PRINT);
+
     }
     else if(command == "SAVE") {
         g_StateStack.push(SAVE);
+
     }
     else if(command == "LOAD") {
         g_StateStack.push(LOAD);
     }
     else if(command == "EXIT" || command == ""){
-        g_StateStack.push(EXIT);
+        cout<<"Exiting Expression Calculator..."<<endl;
+        g_StateStack.pop();
+
     }
     else if(command == "HELP"){
         g_StateStack.push(HELP);
+
     }
     else
     {
-        string exception = "INCORRECT_INPUT";
-        throw exception;
+        g_StateStack.push(ERR);
+
     }
 }
 
-bool exitCondition(string line){
-    for(int i = 0; i < line.length();i++)
-        line[i] = toupper(line[i]);
-
-    return (line != "EXIT" && line != "");
-
-}
-
 void cleanInput(string& line){
-    for(int i = 0; 1; i++){
+    for(int i = 0; true; i++){
         if(line[i] == ' ') {
             line = line.substr(i, string::npos);
         }
@@ -169,7 +191,53 @@ int getDerivation(string s ) {
     return counter;
 }
 
+void oneArg(char* argv[], polynomial polys[26]) {
+    if(fileExists(argv[1])) {
+        string expression;
+        int lineNumber = 0;
+        ifstream infile;
+        infile.open(argv[1]);
+        while(getline(infile, expression)) {
+            polynomial temp_poly(expression);
+            polys[lineNumber] = temp_poly;
+            lineNumber++;
+        }
+        infile.close();
+    }
+    else {
+        cout<<"FILE_DOESNT_EXIST"<<endl;
+    }
+}
+
+void twoArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack) {
+
+    if(argv[1] == "EXECUTE") {
+        if(fileExists(argv[2])) {
+            string expression;
+            ifstream infile;
+            infile.open(argv[2]);
+            while(getline(infile, expression)) {
+                evalCommand(expression, polys, g_StateStack);
+            }
+            infile.close();
+        }
+    }
+    else if(argv[1] == "RECORD") {
+        if(fileExists(argv[2])) {
+            cout<<"FILENAME_ALREADY_EXISTS"<<endl;
+        }
+        else {
+            record_filename = argv[2];
+            recording = true;
+        }
+    }
+    else {
+        cout<<"ERROR: INCORRECT INPUT FORMAT"<<endl;
+    }
+}
+
 void let(string line, polynomial polys [26], string ALPHABET){
+
     string exception;
     size_t pos;
 
@@ -182,7 +250,6 @@ void let(string line, polynomial polys [26], string ALPHABET){
         cout<<"Generated "<<current_exp<< " = "<<p<<endl<<endl;
 
         polys[ALPHABET.find(current_exp)] = p;
-        cout<<polys[ALPHABET.find(current_exp)]<<endl;
     }
     else{
         exception = "LET not valid. Function not provided.";
@@ -268,26 +335,22 @@ void save(string line, polynomial polys [26], string ALPHABET){
 }
 void load(string line, polynomial polys [26], string ALPHABET){
 
-    string infile_name(line.substr(line.find("LOAD")+6, string::npos));
+    string infile_name(line.substr(line.find("LOAD") + 6, string::npos));
 
-    if(fileExists(infile_name)) {
+    if (fileExists(infile_name)) {
         string expression;
         int lineNumber = 0;
         ifstream infile;
         infile.open(infile_name);
-        while(getline(infile, expression)) {
+        while (getline(infile, expression)) {
             polynomial temp_poly(expression);
-
             polys[lineNumber] = temp_poly;
             lineNumber++;
         }
         infile.close();
+    } else {
+        cout << "FILE_DOESNT_EXIST" << endl;
     }
-    else {
-        string file_error = "FILE_DOESNT_EXIST";
-        throw file_error;
-    }
-
 }
 void help(string line, polynomial polys [26], string ALPHABET){
     const string INSTRUCTIONS =
@@ -305,8 +368,8 @@ void help(string line, polynomial polys [26], string ALPHABET){
 
     cout<<INSTRUCTIONS<<endl;
 }
-void exit(string line, polynomial polys [26], string ALPHABET){
-    cout<<"Exiting Expression Calculator..."<<endl;
-    return;
+void err(string line, polynomial polys [26], string ALPHABET){
+    string exception = "BAD_INPUT";
+    throw exception;
 }
 
