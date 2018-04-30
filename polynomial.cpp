@@ -156,7 +156,6 @@ polynomial operator+(const polynomial& a, const polynomial &b){
         ans.poly.push_back(b.poly[i]);
     }
 
-
     ans.combineLikeTerms();
     return ans;
 }
@@ -165,11 +164,15 @@ polynomial operator+(const polynomial& a, const polynomial &b){
 polynomial operator-(const polynomial& a, const polynomial &b)
 {
     polynomial ans;
-    for(size_t i = 0; i < a.poly.size(); ++i)
-        for(size_t j = 0; j < b.poly.size(); ++j)
-            if(a.poly[i].getPower() == b.poly[j].getPower())
-                ans.poly.push_back(a.poly[i] - b.poly[j]);
-    ans.reduce();
+    for(int i=0; i<a.poly.size(); i++){
+        ans.poly.push_back(a.poly[i]);
+
+    }
+
+    for(int i=0; i<b.poly.size(); i++){
+        ans.poly.push_back(-1*b.poly[i]);
+    }
+    ans.combineLikeTerms();
     return ans;
 }
 
@@ -177,10 +180,14 @@ polynomial operator-(const polynomial& a, const polynomial &b)
 polynomial operator*(const polynomial& a, const polynomial &b)
 {
     polynomial ans;
-    for(size_t i = 0; i < a.poly.size(); ++i)
-        for(size_t j = 0; j < b.poly.size(); ++j)
-            ans.poly.push_back(a.poly[i] * b.poly[j]);
-    ans.reduce();
+    for(int i = 0; i < a.poly.size(); ++i){
+        for(int j = 0; j < b.poly.size(); ++j){
+            term temp = a.poly[i] * b.poly[j];
+            ans.poly.push_back(temp);
+        }
+    }
+
+    ans.combineLikeTerms();
     return ans;
 }
 
