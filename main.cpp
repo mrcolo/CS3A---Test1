@@ -34,10 +34,10 @@ int main(int argc, char* argv[]){
     //App starts
     cout<<WELCOMEMSG<<endl;
     polynomial polys [26];
+
     //Basic Controller
     do{
         try {
-
             evalCommand(getInput(INPUTPROMPT, command), polys);
 
         }
@@ -62,7 +62,7 @@ string getInput(const string prompt, string& line){
 void evalCommand(string line, polynomial polys[26]){
     const string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
                  INSTRUCTIONS =
-            "POSSIBLE INSTRUCTIONS: \n\n"
+                    "POSSIBLE INSTRUCTIONS: \n\n"
                     "- LET  => Stores algebraic expression as capital letter A-Z\n\n"
                     "\texample: LET F = 2X + 4\n\n"
                     "- EVAL => evaluates pre-stored algebraic expression at a given value\n\n"
@@ -112,7 +112,14 @@ void evalCommand(string line, polynomial polys[26]){
 
     }
     else if(command == "PRINT"){
-        cout<<"input: PRINT/print"<<endl;
+        string current_print = line.substr(line.find("PRINT")+7,string::npos);
+
+        if(current_print.length() == 1){
+            current_print = toupper(current_print[0]);
+            cout<<current_print<<" = "<<polys[ALPHABET.find(current_print)]<<endl;
+        }
+
+
     }
     else if(command == "SAVE"){
 
@@ -152,7 +159,6 @@ void cleanInput(string& line){
             break;
         }
     }
-    cout<<line<<endl;
 }
 
 
