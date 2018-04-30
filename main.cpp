@@ -18,13 +18,13 @@ struct StateStruct {
 
 typedef void (*argptr)(char*[], polynomial[], string&, bool&, string, stack<StateStruct>&);
 
-//Functions for controller --- CONTROLLER
+//HELPER FUNCTIONS --- CONTROLLER
 void getInput(const string& prompt, string& line, vector<string> &str);
 void evalCommand(string line, polynomial polys [26],stack<StateStruct>& g_StateStack);
 void cleanInput(string& line);
 bool fileExists(const string& filename);
 int getDerivation(string s );
-
+bool isExiting(string s);
 //Functions returning from pointer --- ACTIONS
 void let(string line, polynomial polys [26], string ALPHABET);
 void eval(string line, polynomial polys [26], string ALPHABET);
@@ -64,27 +64,29 @@ int main(int argc, char* argv[]) {
 
     //DISPLAY WELCOME MSG
     cout<<WELCOMEMSG<<endl;
-
     //START ITERATION CONTROLLER
+
     do{
         try {
             getInput(INPUTPROMPT, command, strRecord);
             evalCommand(command, polys, g_StateStack);
-            g_StateStack.top().f(command, polys, ALPHABET);
+            if(!isExiting(command))
+                g_StateStack.top().f(command, polys, ALPHABET);
         }
         catch (string& e) {
             cout << "ERROR:"<<endl<<e<<endl<<endl;
         }
         
         if(g_StateStack.size() == 2){
+
             g_StateStack.pop();
         }
-
     } while(!g_StateStack.empty());
 
     if(recording) {
         ofstream outfile;
         outfile.open(record_filename);
+
         for(const auto &i : strRecord) {
             outfile<<i<<endl;
         }
@@ -94,6 +96,7 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
+//HELPER FUNCTIONS
 void getInput(const string& prompt, string& line, vector<string> &str){
     cout<<prompt;
     getline(cin, line);
@@ -101,7 +104,6 @@ void getInput(const string& prompt, string& line, vector<string> &str){
     str.push_back(line);
     cout<<endl;
 }
-
 void evalCommand(string line, polynomial polys[26], stack<StateStruct>& g_StateStack){
 
     const string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -155,7 +157,6 @@ void evalCommand(string line, polynomial polys[26], stack<StateStruct>& g_StateS
 
     }
 }
-
 void cleanInput(string& line){
     for(int i = 0; true; i++){
         if(line[i] == ' ') {
@@ -167,12 +168,10 @@ void cleanInput(string& line){
         }
     }
 }
-
 bool fileExists(const string &filename) {
     ifstream infile(filename.c_str());
     return infile.good();
 }
-
 int getDerivation(string s ) {
     //get the number of the derivative we are looking for.
     int counter = 0;
@@ -183,7 +182,12 @@ int getDerivation(string s ) {
     }
     return counter;
 }
-
+bool isExiting(string s){
+    cleanInput(s);
+    string command(s.substr(0,s.find(' ')));
+    return (command == "EXIT" || command == "");
+}
+//ARGUMENT FUNCTIONS
 void oneArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack) {
 
     cout<<"Loading "<<argv[1]<<endl;
@@ -203,11 +207,22 @@ void oneArg(char* argv[], polynomial polys[26], string& record_filename, bool& r
         cout<<"FILE_DOESNT_EXIST"<<endl;
     }
 }
+void handleArg(int argc,char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack){
 
+    argptr argfunctions [2] = {&oneArg,&twoArg};
+
+    if(argc > 3){
+        string exception = "OVERLOAD OF ARGUMENTS";
+        throw exception;
+    }
+    else{
+        argfunctions[argc - 2](argv, polys, record_filename, recording, ALPHABET, g_StateStack);
+    }
+}
 void twoArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack) {
-
-    cout<<argv[1]<<" "<<argv[2]<<endl;
-    if(argv[1] == "EXECUTE") {
+    string first = argv[1], second = argv[2];
+    cout<<first<<" "<<second<<endl;
+    if(first == "EXECUTE") {
         if(fileExists(argv[2])) {
             string expression;
             ifstream infile;
@@ -218,9 +233,10 @@ void twoArg(char* argv[], polynomial polys[26], string& record_filename, bool& r
             infile.close();
         }
     }
-    else if(argv[1] == "RECORD") {
+    else if(first == "RECORD") {
         if(fileExists(argv[2])) {
-            cout<<"FILENAME_ALREADY_EXISTS"<<endl;
+            string ex = "FILENAME_ALREADY_EXISTS";
+            throw ex;
         }
         else {
             record_filename = argv[2];
@@ -228,10 +244,12 @@ void twoArg(char* argv[], polynomial polys[26], string& record_filename, bool& r
         }
     }
     else {
-        cout<<"ERROR: INCORRECT INPUT FORMAT"<<endl;
+        cout<<argv[1]<<endl;
+        string ex = "INCORRECT INPUT FORMAT";
+        throw ex;
     }
 }
-
+//CONTROLLER FUNCTIONS
 void let(string line, polynomial polys [26], string ALPHABET){
 
     string exception;
@@ -367,19 +385,6 @@ void help(string line, polynomial polys [26], string ALPHABET){
 void err(string line, polynomial polys [26], string ALPHABET){
     string exception = "BAD_INPUT";
     throw exception;
-}
-
-void handleArg(int argc,char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack){
-
-    argptr argfunctions [2] = {&oneArg,&twoArg};
-
-    if(argc > 3){
-        string exception = "OVERLOAD OF ARGUMENTS";
-        throw exception;
-    }
-    else{
-        argfunctions[argc - 2](argv, polys, record_filename, recording, ALPHABET, g_StateStack);
-    }
 }
 
 
