@@ -7,7 +7,7 @@
 #include <sstream>
 using namespace std;
 
-string getInput(const string& prompt, string& line);
+string getInput(const string prompt, string& line);
 void evalCommand(string line, polynomial polys [26]);
 bool exitCondition(string line);
 void cleanInput(string& line);
@@ -16,9 +16,9 @@ int getDerivation(string s );
 
 int main(int argc, char* argv[]){
 
-
     const string WELCOMEMSG = "Welcome to Expression Calculator. If you don't know what to do, type HELP.\n",
                  INPUTPROMPT = "INPUT: ";
+
     //TODO Create Functions for each case.
     switch (argc){
         case 2:
@@ -47,12 +47,15 @@ int main(int argc, char* argv[]){
     }while(exitCondition(command));
 
     //TODO save;
+
     return 0;
 }
 
-string getInput(const string& prompt, string& line){
+string getInput(const string prompt, string& line){
+
     cout<<prompt;
     getline(cin, line);
+
     cleanInput(line);
 
     cout<<endl;
@@ -74,7 +77,6 @@ void evalCommand(string line, polynomial polys[26]){
                     "- LOAD => loads from the following file 26 pre-stored algebraic expression\n\n"
                     "\texample: LOAD file.exp\n\n";
 
-    //TODO use string.find_first_of() instead
     string command(line.substr(0,line.find(' ')));
 
     //turns string to uppercase

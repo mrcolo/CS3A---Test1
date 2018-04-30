@@ -9,7 +9,8 @@ polynomial::polynomial(string s) {
     string current;
     while(ss>>current){
         term current_term(current);
-        poly.push_back(current_term);
+        if(current_term.getCoeff() != 0)
+            poly.push_back(current_term);
     }
     this->order();
 
@@ -141,7 +142,8 @@ void polynomial::combineLikeTerms()
             temp += poly[0];
             poly.erase(poly.begin(), poly.begin()+1);
         }
-        ans.push_back(temp);
+        if(temp.getCoeff() != 0)
+            ans.push_back(temp);
     }
     poly = ans;
 }

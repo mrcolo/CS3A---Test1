@@ -3,6 +3,9 @@
 
 term::term(double c, double p)
 {
+    if(c == 0){
+        p = 0;
+    }
     if(p < 0)
         set(c,0);
     else
@@ -203,8 +206,9 @@ void term::stringToTerm(string s) {
             ss<<s.substr(0,string::npos);
             ss>>coeff;
             power = 0;
-
     }
+    if (coeff == 0)
+        power = 0;
 }
 
 
