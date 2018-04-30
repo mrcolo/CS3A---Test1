@@ -36,7 +36,7 @@ int main(int argc, char* argv[]){
             polys['F'];
         }
         catch (string& e){
-            cout << "ERROR:"<<endl<<e <<endl;
+            cout << "ERROR:"<<endl<<e<<endl;
         }
 
     }while(command != "EXIT");
@@ -51,8 +51,7 @@ string getInput(const string prompt, string& line){
     return line;
 }
 
-void evalCommand(string line, polynomial polys[26])
-{
+void evalCommand(string line, polynomial polys[26]){
     const string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
                  INSTRUCTIONS =
             "POSSIBLE INSTRUCTIONS: \n\n"
@@ -70,26 +69,24 @@ void evalCommand(string line, polynomial polys[26])
     //TODO use string.find_first_of() instead
     string command(line.substr(0,line.find(' ')));
 
-
     //turns string to uppercase
     for(int i = 0; i < command.length(); i++ )
         command[i] = toupper(command[i]);
 
     //TODO use function pointers to execute rather than if statements
-    if(command == "LET")
-    {
-
+    if(command == "LET"){
         string exception;
         size_t pos;
 
         if((pos = line.find('=')) != string::npos){
             char current_exp = toupper(line[pos-2]);
 
-            polynomial p(line.substr(pos+2,string::npos));
+            polynomial p(line.substr(pos+2, string::npos));
 
-            cout<<"Generated "<<current_exp<< " = "<<p<<endl;
+            cout<<"Generated "<<current_exp<< " = "<<p<<endl<<endl;
 
             polys[ALPHABET.find(current_exp)] = p;
+            cout<<polys[ALPHABET.find(current_exp)]<<endl;
         }
         else{
             exception = "LET not valid. Function not provided.";
