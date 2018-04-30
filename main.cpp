@@ -18,9 +18,7 @@ int main(int argc, char* argv[]){
     const string WELCOMEMSG = "Welcome to Expression Calculator. If you don't know what to do, type HELP.\n",
                  INPUTPROMPT = "INPUT: ";
     //TODO Create Functions for each case.
-    term a("3");
-    term b("2");
-    cout << a + b<<endl;
+
     switch (argc){
         case 2:
             cout<<"One Argument"<<argv[1]<<endl;
@@ -133,12 +131,11 @@ void evalCommand(string line, polynomial polys[26]){
                     exp1 = toupper(instruction[0]);
                     op = instruction [2];
                     exp2 = toupper(instruction[4]);
-                    cout<<exp1<<exp2<<op;
 
                     switch(op){
                         case '+':
                             cout<<"RESULT: "<< polys[ALPHABET.find(exp1)] + polys[ALPHABET.find(exp2)]<<endl;
-                            //polys[ALPHABET.find(editFunction[0])] = polys[ALPHABET.find(exp1)] + polys[ALPHABET.find(exp2)];
+                            polys[ALPHABET.find(editFunction[0])] = polys[ALPHABET.find(exp1)] + polys[ALPHABET.find(exp2)];
                             break;
                         case '-':
                             cout<<"RESULT: "<< polys[ALPHABET.find(exp1)] - polys[ALPHABET.find(exp2)]<<endl;

@@ -131,12 +131,11 @@ void polynomial::combineLikeTerms()
 {
     vector<term> ans;
     term temp;
-    while(!poly.empty())
-    {
-        temp = poly[0];
-        poly.erase(poly.begin(),poly.begin()+1);
-        while(temp.getPower() == poly[0].getPower())
-        {
+    order();//sort in order
+    while(!poly.empty()){
+        temp = poly[0]; //store first element in a variable
+        poly.erase(poly.begin(),poly.begin()+1);//erase first element from vector
+        if(temp.getPower() == poly[0].getPower()){
             temp += poly[0];
             poly.erase(poly.begin(), poly.begin()+1);
         }
@@ -145,11 +144,20 @@ void polynomial::combineLikeTerms()
     poly = ans;
 }
 
-polynomial operator+(const polynomial& a, const polynomial &b)
-{
-    stringstream ss;
+polynomial operator+(const polynomial& a, const polynomial &b){
     polynomial ans;
-    ans.reduce();
+
+    for(int i=0; i<a.poly.size(); i++){
+        ans.poly.push_back(a.poly[i]);
+
+    }
+
+    for(int i=0; i<b.poly.size(); i++){
+        ans.poly.push_back(b.poly[i]);
+    }
+
+
+    ans.combineLikeTerms();
     return ans;
 }
 
