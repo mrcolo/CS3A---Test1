@@ -9,14 +9,12 @@
 
 using namespace std;
 
-string getInput(const string& prompt, string& line, vector<string> &str);
 typedef void (*fptr)(string, polynomial [], string);
 
 static struct StateStruct {
     fptr f;
 };
-
-string getInput(const string prompt, string& line);
+void getInput(const string& prompt, string& line, vector<string> &str);
 void evalCommand(string line, polynomial polys [26],stack<StateStruct>& g_StateStack);
 void cleanInput(string& line);
 bool fileExists(const string& filename);
@@ -72,18 +70,18 @@ int main(int argc, char* argv[]) {
     //Basic Controller
     do{
         try {
-            command = getInput(INPUTPROMPT, command, strRecord);
+            getInput(INPUTPROMPT, command, strRecord);
             evalCommand(command, polys, g_StateStack);
             g_StateStack.top().f(command, polys, ALPHABET);
         }
         catch (string& e) {
             cout << "ERROR:"<<endl<<e<<endl<<endl;
         }
+        
         if(g_StateStack.size() == 2){
             g_StateStack.pop();
         }
-
-
+        
     } while(!g_StateStack.empty());
 
     //TODO save;
@@ -100,13 +98,12 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
-string getInput(const string& prompt, string& line, vector<string> &str){
+void getInput(const string& prompt, string& line, vector<string> &str){
     cout<<prompt;
     getline(cin, line);
     cleanInput(line);
     str.push_back(line);
     cout<<endl;
-    return line;
 }
 
 void evalCommand(string line, polynomial polys[26], stack<StateStruct>& g_StateStack){
