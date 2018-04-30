@@ -17,7 +17,7 @@ int main(int argc, char* argv[]){
 
                  const string WELCOMEMSG = "Welcome to Expression Calculator. If you don't know what to do, type HELP.\n",
                  INPUTPROMPT = "INPUT: ";
-
+    //hellof
     //TODO Create Functions for each case.
     switch (argc){
         case 1:
@@ -123,7 +123,7 @@ void evalCommand(string line, polynomial polys[26]){
 
     }
     else if(command == "SAVE") {
-        string outfile_name(command.find("SAVE")+6, string::npos);
+        string outfile_name(line.substr(line.find("SAVE")+6, string::npos));
         if(fileExists(outfile_name)) {
             string filename_error = "FILENAME_ALREADY_EXISTS";
             throw filename_error;
@@ -136,10 +136,11 @@ void evalCommand(string line, polynomial polys[26]){
             }
             outfile.close();
         }
-        cout<<INSTRUCTIONS<<endl;
+        //TODO add a few couts that explain what the program is doing
     }
     else if(command == "LOAD") {
-        string infile_name(command.find("LOAD")+6, string::npos);
+        string infile_name(line.substr(line.find("LOAD")+6, string::npos));
+
         if(fileExists(infile_name)) {
             string expression;
             int lineNumber = 0;
@@ -147,12 +148,13 @@ void evalCommand(string line, polynomial polys[26]){
             infile.open(infile_name);
             while(getline(infile, expression)) {
                 polynomial temp_poly(expression);
+
                 polys[lineNumber] = temp_poly;
                 lineNumber++;
             }
             infile.close();
         }
-        cout<<INSTRUCTIONS<<endl;
+        //TODO add a few couts that explain what the program is doing
     }
     else if(command == "EXIT" || command == ""){
         cout<<"Exiting Expression Calculator..."<<endl;
