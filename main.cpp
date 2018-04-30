@@ -7,10 +7,11 @@
 #include <sstream>
 using namespace std;
 
-string getInput(const string prompt, string& line);
+string getInput(const string& prompt, string& line);
 void evalCommand(string line, polynomial polys [26]);
 bool exitCondition(string line);
 void cleanInput(string& line);
+bool fileExists(const string& filename);
 
 int main(int argc, char* argv[]){
 
@@ -51,7 +52,7 @@ int main(int argc, char* argv[]){
     return 0;
 }
 
-string getInput(const string prompt, string& line){
+string getInput(const string& prompt, string& line){
     cout<<prompt;
     getline(cin, line);
     cleanInput(line);
@@ -121,11 +122,37 @@ void evalCommand(string line, polynomial polys[26]){
 
 
     }
-    else if(command == "SAVE"){
-
+    else if(command == "SAVE") {
+        string outfile_name(command.find("SAVE")+6, string::npos);
+        if(fileExists(outfile_name)) {
+            string filename_error = "FILENAME_ALREADY_EXISTS";
+            throw filename_error;
+        }
+        else {
+            ofstream outfile;
+            outfile.open(outfile_name);
+            for(size_t i = 0; i < 26; ++i) {
+                outfile<<polys[i]<<endl;
+            }
+            outfile.close();
+        }
+        cout<<INSTRUCTIONS<<endl;
     }
-    else if(command == "LOAD"){
-
+    else if(command == "LOAD") {
+        string infile_name(command.find("LOAD")+6, string::npos);
+        if(fileExists(infile_name)) {
+            string expression;
+            int lineNumber = 0;
+            ifstream infile;
+            infile.open(infile_name);
+            while(getline(infile, expression)) {
+                polynomial temp_poly(expression);
+                polys[lineNumber] = temp_poly;
+                lineNumber++;
+            }
+            infile.close();
+        }
+        cout<<INSTRUCTIONS<<endl;
     }
     else if(command == "EXIT" || command == ""){
         cout<<"Exiting Expression Calculator..."<<endl;
@@ -161,4 +188,7 @@ void cleanInput(string& line){
     }
 }
 
-
+bool fileExists(const string &filename) {
+    ifstream infile(filename.c_str());
+    return infile.good();
+}
