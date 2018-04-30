@@ -15,14 +15,13 @@ bool fileExists(const string& filename);
 
 int main(int argc, char* argv[]){
 
-                 const string WELCOMEMSG = "Welcome to Expression Calculator. If you don't know what to do, type HELP.\n",
+    const string WELCOMEMSG = "Welcome to Expression Calculator. If you don't know what to do, type HELP.\n",
                  INPUTPROMPT = "INPUT: ";
-    //hellof
     //TODO Create Functions for each case.
+    term a("3");
+    term b("2");
+    cout << a + b<<endl;
     switch (argc){
-        case 1:
-            cout<<"No arguments."<<endl;
-            break;
         case 2:
             cout<<"One Argument"<<argv[1]<<endl;
             break;
@@ -56,6 +55,7 @@ string getInput(const string& prompt, string& line){
     cout<<prompt;
     getline(cin, line);
     cleanInput(line);
+
     cout<<endl;
     return line;
 }
@@ -118,6 +118,58 @@ void evalCommand(string line, polynomial polys[26]){
         if(current_print.length() == 1){
             current_print = toupper(current_print[0]);
             cout<<current_print<<" = "<<polys[ALPHABET.find(current_print)]<<endl;
+        }
+        else{
+            int pos;
+            if((pos = current_print.find("=")) != string::npos){
+
+                string editFunction = current_print.substr(pos-2,pos-1);
+                editFunction[0] = toupper(editFunction[0]);
+                string instruction = current_print.substr(pos+2,string::npos);
+
+                char exp1,exp2,op;
+
+                if(instruction.find('\'') == string::npos){
+                    exp1 = toupper(instruction[0]);
+                    op = instruction [2];
+                    exp2 = toupper(instruction[4]);
+                    cout<<exp1<<exp2<<op;
+
+                    switch(op){
+                        case '+':
+                            cout<<"RESULT: "<< polys[ALPHABET.find(exp1)] + polys[ALPHABET.find(exp2)]<<endl;
+                            //polys[ALPHABET.find(editFunction[0])] = polys[ALPHABET.find(exp1)] + polys[ALPHABET.find(exp2)];
+                            break;
+                        case '-':
+                            cout<<"RESULT: "<< polys[ALPHABET.find(exp1)] - polys[ALPHABET.find(exp2)]<<endl;
+                            polys[ALPHABET.find(editFunction[0])] = polys[ALPHABET.find(exp1)] - polys[ALPHABET.find(exp2)];
+                            break;
+                        case '*':
+                            cout<<"RESULT: "<< polys[ALPHABET.find(exp1)] * polys[ALPHABET.find(exp2)]<<endl;
+                            polys[ALPHABET.find(editFunction[0])] = polys[ALPHABET.find(exp1)] * polys[ALPHABET.find(exp2)];
+                            break;
+
+                        default:
+                            string exception = "BAD_INPUT";
+                            throw exception;
+                    }
+                }
+
+                else{
+                    //getDerivative();
+                }
+
+
+                editFunction[0] = toupper(editFunction[0]);
+
+                int editFunctionIndex = ALPHABET.find(editFunction[0]);
+
+
+            }
+
+
+
+
         }
 
 
@@ -197,4 +249,14 @@ void cleanInput(string& line){
 bool fileExists(const string &filename) {
     ifstream infile(filename.c_str());
     return infile.good();
+}
+
+int getDerivation(string s ) {
+    int counter = 0;
+
+    for (int i = 0; s.length(); i++) {
+        if (s[i] == '\'')
+            counter++;
+    }
+    return counter;
 }

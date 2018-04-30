@@ -147,11 +147,8 @@ void polynomial::combineLikeTerms()
 
 polynomial operator+(const polynomial& a, const polynomial &b)
 {
+    stringstream ss;
     polynomial ans;
-    for(size_t i = 0; i < a.poly.size(); ++i)
-        for(size_t j = 0; j < b.poly.size(); ++j)
-            if(a.poly[i].getPower() == b.poly[j].getPower())
-                ans.poly.push_back(a.poly[i] + b.poly[j]);
     ans.reduce();
     return ans;
 }
