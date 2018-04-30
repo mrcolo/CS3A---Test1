@@ -81,6 +81,7 @@ polynomial polynomial::derive(){
     for(int i = 0;i < poly.size(); i++){
         string current;
         term current_term(poly[i].getPower()*poly[i].getCoeff(),poly[i].getPower()-1);
+
         if(current_term.getCoeff() != 0){
             ss<<current_term;
             ss>>current;
@@ -94,6 +95,7 @@ polynomial polynomial::derive(){
 
 polynomial polynomial::returnDerivative(int i){
     polynomial actual = *this;
+   // cout<<"i"<<endl;
     for(int j = 0 ; j < i ; j++){
         actual = actual.derive();
     }

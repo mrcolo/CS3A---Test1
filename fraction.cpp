@@ -128,7 +128,8 @@ int fraction::getDenom() const//Accessor
 
 double fraction::toDouble() const
 {
-    return (num/denom);
+
+    return ((double)num)/((double)denom);
 }
 
 void fraction::display() const//Display values

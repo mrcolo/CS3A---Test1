@@ -16,12 +16,10 @@ int getDerivation(string s );
 
 int main(int argc, char* argv[]){
 
+
     const string WELCOMEMSG = "Welcome to Expression Calculator. If you don't know what to do, type HELP.\n",
                  INPUTPROMPT = "INPUT: ";
     //TODO Create Functions for each case.
-    polynomial p ("2x^2");
-    cout<<p.returnDerivative(1);
-
     switch (argc){
         case 2:
             cout<<"One Argument"<<argv[1]<<endl;
