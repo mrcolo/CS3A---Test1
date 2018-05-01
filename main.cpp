@@ -4,6 +4,7 @@
 #include <string>
 #include <sstream>
 #include <stack>
+#include<fstream>
 
 using namespace std;
 
@@ -15,18 +16,24 @@ struct StateStruct {
     fptr f;
 };
 
+typedef void (*argptr)(char*[], polynomial[], string&, bool&, string, stack<StateStruct>&,vector<string>&);
 
-typedef void (*argptr)(char*[], polynomial[], string&, bool&, string, stack<StateStruct>&);
-
-//HELPER FUNCTIONS --- CONTROLLER
+//HELPER FUNCTIONS
 void getInput(const string& prompt, string& line, vector<string> &str);
-void evalCommand(string line, polynomial polys [26],stack<StateStruct>& g_StateStack);
+void fillStack(string line, polynomial polys [26],stack<StateStruct>& g_StateStack);
 void clearStack(stack<StateStruct>& g_StateStack);
 void cleanInput(string& line);
 bool fileExists(const string& filename);
 int getDerivation(string s );
 bool isExiting(string s);
-//Functions returning from pointer --- ACTIONS
+void input(const string WELCOMEMSG, const string INPUTPROMPT,const string ALPHABET, string command, vector<string>& strRecord,polynomial polys [26], stack<StateStruct>& g_StateStack);
+
+//ARGUMENT FUNCTIONS
+void handleArg(int argc,char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack,vector<string>&);
+void oneArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack,vector<string>& strRecord);
+void twoArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack, vector<string>& strRecord);
+
+//CONTROLLER FUNCTIONS
 void let(string line, polynomial polys [26], string ALPHABET);
 void eval(string line, polynomial polys [26], string ALPHABET);
 void print(string line, polynomial polys [26], string ALPHABET);
@@ -34,12 +41,6 @@ void save(string line, polynomial polys [26], string ALPHABET);
 void load(string line, polynomial polys [26], string ALPHABET);
 void help(string line, polynomial polys [26], string ALPHABET);
 void err(string line, polynomial polys [26], string ALPHABET);
-void exit(string line, polynomial polys [26], string ALPHABET);
-
-//Functions for cmd line args -- ARGS
-void handleArg(int argc,char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack);
-void oneArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack);
-void twoArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack);
 
 int main(int argc, char* argv[]) {
 
@@ -47,56 +48,35 @@ int main(int argc, char* argv[]) {
     stack<StateStruct> g_StateStack;
     polynomial polys [26];
     vector<string> strRecord;
-
+    istream in();
     string command, record_filename;
     bool recording = false;
-
 
     //CONSTANT VARS
     const string WELCOMEMSG = "Welcome to Expression Calculator. If you don't know what to do, type HELP.\n",
                  INPUTPROMPT = "INPUT: ";
     const string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
     //HANDLE ARGUMENTS
     try{
-        handleArg(argc,argv, polys, record_filename, recording, ALPHABET, g_StateStack);
+        handleArg(argc,argv, polys, record_filename, recording, ALPHABET, g_StateStack, strRecord);
     }
     catch(string& e){
         cout<<"ERROR:"<<endl<<e<<endl<<endl;
+        return 0;
     }
-    //DISPLAY WELCOME MSG
-    cout<<WELCOMEMSG<<endl;
-    //START ITERATION CONTROLLER
 
-    do{
-        try {
-            getInput(INPUTPROMPT, command, strRecord);
-            evalCommand(command, polys, g_StateStack);
+    input(WELCOMEMSG,INPUTPROMPT,ALPHABET,command,strRecord,polys,g_StateStack);
 
-            if(!isExiting(command)){
-                g_StateStack.top().f(command, polys, ALPHABET);
-            }
-            else{
-                clearStack(g_StateStack);
-            }
-
-        }
-        catch (string& e) {
-            cout << "ERROR:"<<endl<<e<<endl<<endl;
-        }
-        
-        if(g_StateStack.size() == 2){
-            g_StateStack.pop();
-        }
-    } while(!g_StateStack.empty());
 
     if(recording) {
         ofstream outfile;
         outfile.open(record_filename);
 
-        for(const auto &i : strRecord) {
-            outfile<<i<<endl;
+        for(int i = 0;i < strRecord.size();i++) {
+            cout<<"Writing EXPRESSION "<<i<<endl;
+            outfile<<strRecord[(strRecord.size()-1)-i]<<endl;
         }
+        cout<<"TERMINATING..."<<endl;
         outfile.close();
     }
 
@@ -111,7 +91,7 @@ void getInput(const string& prompt, string& line, vector<string> &str){
     str.push_back(line);
     cout<<endl;
 }
-void evalCommand(string line, polynomial polys[26], stack<StateStruct>& g_StateStack){
+void fillStack(string line, polynomial polys[26], stack<StateStruct>& g_StateStack){
 
     const string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -193,8 +173,9 @@ bool isExiting(string s){
     string command(s.substr(0,s.find(' ')));
     return (command == "EXIT" || command == "");
 }
+
 //ARGUMENT FUNCTIONS
-void oneArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack) {
+void oneArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack,vector<string>& strRecord) {
 
     cout<<"Loading "<<argv[1]<<endl;
     if(fileExists(argv[1])) {
@@ -213,7 +194,7 @@ void oneArg(char* argv[], polynomial polys[26], string& record_filename, bool& r
         cout<<"FILE_DOESNT_EXIST"<<endl;
     }
 }
-void handleArg(int argc,char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack){
+void handleArg(int argc,char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack, vector<string>& strRecord){
 
     argptr argfunctions [2] = {&oneArg,&twoArg};
 
@@ -222,10 +203,10 @@ void handleArg(int argc,char* argv[], polynomial polys[26], string& record_filen
         throw exception;
     }
     else if (argc == 2 || argc == 3){
-        argfunctions[argc - 2](argv, polys, record_filename, recording, ALPHABET, g_StateStack);
+        argfunctions[argc - 2](argv, polys, record_filename, recording, ALPHABET, g_StateStack, strRecord);
     }
 }
-void twoArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack) {
+void twoArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack, vector<string>& strRecord) {
     string first = argv[1], second = argv[2];
     cout<<first<<" "<<second<<endl;
     if(first == "EXECUTE") {
@@ -233,9 +214,11 @@ void twoArg(char* argv[], polynomial polys[26], string& record_filename, bool& r
             string expression;
             ifstream infile;
             infile.open(argv[2]);
-            while(getline(infile, expression)) {
-                evalCommand(expression, polys, g_StateStack);
+            while(getline(infile, expression)){
+                    fillStack(expression, polys, g_StateStack);
+                    strRecord.push_back(expression);
             }
+
             infile.close();
         }
     }
@@ -255,6 +238,54 @@ void twoArg(char* argv[], polynomial polys[26], string& record_filename, bool& r
         throw ex;
     }
 }
+void input(const string WELCOMEMSG, const string INPUTPROMPT,const string ALPHABET, string command, vector<string>& strRecord,polynomial polys [26], stack<StateStruct>& g_StateStack){
+    //DISPLAY WELCOME MSG
+    bool isCin = true;
+    int current = 0;
+
+    //START ITERATION CONTROLLER
+    if(g_StateStack.size() != 0){
+        isCin = false;
+    }
+    else{
+        cout<<WELCOMEMSG<<endl;
+    }
+
+    do{
+        try {
+            if(isCin){
+                getInput(INPUTPROMPT, command, strRecord);
+                fillStack(command, polys, g_StateStack);
+            }
+            else{
+                command = strRecord[(strRecord.size()-1)-current];
+                if(command != "")
+                    cout<<"EXECUTING:"<<command<<endl;
+                else
+                    cout<<"TERMINATING..."<<endl;
+
+                current++;
+            }
+
+            if(!isExiting(command)){
+                g_StateStack.top().f(command, polys, ALPHABET);
+            }
+            else{
+                clearStack(g_StateStack);
+            }
+
+        }
+        catch (string& e) {
+            cout << "ERROR:"<<endl<<e<<endl<<endl;
+        }
+
+        if(g_StateStack.size() >= 2){
+            g_StateStack.pop();
+        }
+    } while(!g_StateStack.empty());
+
+}
+
 //CONTROLLER FUNCTIONS
 void let(string line, polynomial polys [26], string ALPHABET){
 
@@ -289,7 +320,7 @@ void print(string line, polynomial polys [26], string ALPHABET){
 
     if(current_print.length() == 1){
         current_print = toupper(current_print[0]);
-        cout<<current_print<<" = "<<polys[ALPHABET.find(current_print)]<<endl;
+        cout<<current_print<<" = "<<polys[ALPHABET.find(current_print)]<<endl<<endl;
     }
     else{
         int pos;
@@ -307,15 +338,15 @@ void print(string line, polynomial polys [26], string ALPHABET){
 
                 switch(op){
                     case '+':
-                        cout<<"RESULT: "<< polys[ALPHABET.find(exp1)] + polys[ALPHABET.find(exp2)]<<endl;
+                        cout<<"RESULT: "<< polys[ALPHABET.find(exp1)] + polys[ALPHABET.find(exp2)]<<endl<<endl;
                         polys[ALPHABET.find(editFunction[0])] = polys[ALPHABET.find(exp1)] + polys[ALPHABET.find(exp2)];
                         break;
                     case '-':
-                        cout<<"RESULT: "<< polys[ALPHABET.find(exp1)] - polys[ALPHABET.find(exp2)]<<endl;
+                        cout<<"RESULT: "<< polys[ALPHABET.find(exp1)] - polys[ALPHABET.find(exp2)]<<endl<<endl;
                         polys[ALPHABET.find(editFunction[0])] = polys[ALPHABET.find(exp1)] - polys[ALPHABET.find(exp2)];
                         break;
                     case '*':
-                        cout<<"RESULT: "<< polys[ALPHABET.find(exp1)] * polys[ALPHABET.find(exp2)]<<endl;
+                        cout<<"RESULT: "<< polys[ALPHABET.find(exp1)] * polys[ALPHABET.find(exp2)]<<endl<<endl;
                         polys[ALPHABET.find(editFunction[0])] = polys[ALPHABET.find(exp1)] * polys[ALPHABET.find(exp2)];
                         break;
 
@@ -331,7 +362,7 @@ void print(string line, polynomial polys [26], string ALPHABET){
 
                 polys[editFunctionIndex] = polys[ALPHABET.find(receiver)].returnDerivative(getDerivation(instruction));
 
-                cout<<editFunction<<" = "<<polys[ALPHABET.find(receiver)].returnDerivative(getDerivation(instruction))<<endl;
+                cout<<editFunction<<" = "<<polys[ALPHABET.find(receiver)].returnDerivative(getDerivation(instruction))<<endl<<endl;
             }
         }
     }
@@ -392,9 +423,3 @@ void err(string line, polynomial polys [26], string ALPHABET){
     string exception = "BAD_INPUT";
     throw exception;
 }
-void exit(string line, polynomial polys [26], string ALPHABET){
-
-}
-
-
-
