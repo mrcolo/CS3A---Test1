@@ -173,71 +173,6 @@ bool isExiting(string s){
     string command(s.substr(0,s.find(' ')));
     return (command == "EXIT" || command == "");
 }
-
-//ARGUMENT FUNCTIONS
-void oneArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack,vector<string>& strRecord) {
-
-    cout<<"Loading "<<argv[1]<<endl;
-    if(fileExists(argv[1])) {
-        string expression;
-        int lineNumber = 0;
-        ifstream infile;
-        infile.open(argv[1]);
-        while(getline(infile, expression)) {
-            polynomial temp_poly(expression);
-            polys[lineNumber] = temp_poly;
-            lineNumber++;
-        }
-        infile.close();
-    }
-    else {
-        cout<<"FILE_DOESNT_EXIST"<<endl;
-    }
-}
-void handleArg(int argc,char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack, vector<string>& strRecord){
-
-    argptr argfunctions [2] = {&oneArg,&twoArg};
-
-    if(argc > 3){
-        string exception = "OVERLOAD OF ARGUMENTS";
-        throw exception;
-    }
-    else if (argc == 2 || argc == 3){
-        argfunctions[argc - 2](argv, polys, record_filename, recording, ALPHABET, g_StateStack, strRecord);
-    }
-}
-void twoArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack, vector<string>& strRecord) {
-    string first = argv[1], second = argv[2];
-    cout<<first<<" "<<second<<endl;
-    if(first == "EXECUTE") {
-        if(fileExists(argv[2])) {
-            string expression;
-            ifstream infile;
-            infile.open(argv[2]);
-            while(getline(infile, expression)){
-                    fillStack(expression, polys, g_StateStack);
-                    strRecord.push_back(expression);
-            }
-
-            infile.close();
-        }
-    }
-    else if(first == "RECORD") {
-        if(fileExists(argv[2])) {
-            string ex = "FILENAME_ALREADY_EXISTS";
-            throw ex;
-        }
-        else {
-            record_filename = argv[2];
-            recording = true;
-        }
-    }
-    else {
-        cout<<argv[1]<<endl;
-        string ex = "INCORRECT INPUT FORMAT";
-        throw ex;
-    }
-}
 void input(const string WELCOMEMSG, const string INPUTPROMPT,const string ALPHABET, string command, vector<string>& strRecord,polynomial polys [26], stack<StateStruct>& g_StateStack){
     //DISPLAY WELCOME MSG
     bool isCin = true;
@@ -284,6 +219,75 @@ void input(const string WELCOMEMSG, const string INPUTPROMPT,const string ALPHAB
         }
     } while(!g_StateStack.empty());
 
+}
+
+//ARGUMENT FUNCTIONS
+void handleArg(int argc,char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack, vector<string>& strRecord){
+
+    argptr argfunctions [2] = {&oneArg,&twoArg};
+
+    if(argc > 3){
+        string exception = "OVERLOAD OF ARGUMENTS";
+        throw exception;
+    }
+    else if (argc == 2 || argc == 3){
+        argfunctions[argc - 2](argv, polys, record_filename, recording, ALPHABET, g_StateStack, strRecord);
+    }
+}
+void oneArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack,vector<string>& strRecord) {
+
+    cout<<"Loading "<<argv[1]<<endl;
+    if(fileExists(argv[1])) {
+        string expression;
+        int lineNumber = 0;
+        ifstream infile;
+        infile.open(argv[1]);
+        while(getline(infile, expression)) {
+            polynomial temp_poly(expression);
+            polys[lineNumber] = temp_poly;
+            lineNumber++;
+        }
+        infile.close();
+    }
+    else {
+        cout<<"FILE_DOESNT_EXIST"<<endl;
+    }
+}
+void twoArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack, vector<string>& strRecord) {
+    string first = argv[1], second = argv[2];
+    cout<<first<<" "<<second<<endl;
+    if(first == "EXECUTE") {
+        if(fileExists(argv[2])) {
+            string expression;
+            ifstream infile;
+            infile.open(argv[2]);
+            while(getline(infile, expression)){
+                    fillStack(expression, polys, g_StateStack);
+                    strRecord.push_back(expression);
+            }
+
+            infile.close();
+        }
+        else{
+            string ex = "FILE_DOES_NOT_EXIST";
+            throw ex;
+        }
+    }
+    else if(first == "RECORD") {
+        if(fileExists(argv[2])) {
+            string ex = "FILENAME_ALREADY_EXISTS";
+            throw ex;
+        }
+        else {
+            record_filename = argv[2];
+            recording = true;
+        }
+    }
+    else {
+        cout<<argv[1]<<endl;
+        string ex = "INCORRECT INPUT FORMAT";
+        throw ex;
+    }
 }
 
 //CONTROLLER FUNCTIONS
@@ -407,7 +411,7 @@ void help(string line, polynomial polys [26], string ALPHABET){
     const string INSTRUCTIONS =
             "POSSIBLE INSTRUCTIONS: \n\n"
                     "- LET  => Stores algebraic expression as capital letter A-Z\n\n"
-                    "\texample: LET F = 2X + 4\n\n"
+                    "\texample: LET F = 2X^1 + 4\n\n"
                     "- EVAL => evaluates pre-stored algebraic expression at a given value\n\n"
                     "\texample: EVAL F(1/4)\n\n"
                     "- PRINT => prints pre-stored algebraic expression\n\n"
