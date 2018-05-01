@@ -172,7 +172,7 @@ int getDerivation(string s ) {
 bool isExiting(string s){
     cleanInput(s);
     string command(s.substr(0,s.find(' ')));
-    return (command == "EXIT" || command == "");
+    return (command == "exit" || command == "EXIT" || command == "");
 }
 void initializeStack(const string WELCOMEMSG, const string INPUTPROMPT,const string ALPHABET, string command, vector<string>& strRecord,polynomial polys [26], stack<StateStruct>& g_StateStack){
     //DISPLAY WELCOME MSG
