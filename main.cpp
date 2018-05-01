@@ -403,7 +403,7 @@ void save(string line, polynomial polys [26], string ALPHABET){
         ofstream outfile;
         // Appending extension if necessary
         if (!hasExt(outfile_name, ext)) {
-            rename(outfile_name.c_str(), (outfile_name + ext).c_str());
+            outfile_name.append(ext);
         }
         outfile.open(outfile_name);
         for(size_t i = 0; i < 26; ++i) {
@@ -423,7 +423,7 @@ void load(string line, polynomial polys [26], string ALPHABET){
         ifstream infile;
         // Appending extension if necessary
         if (!hasExt(infile_name, ext)) {
-            rename(infile_name.c_str(), (infile_name + ext).c_str());
+            infile_name.append(ext);
         }
         infile.open(infile_name);
         while (getline(infile, expression)) {
