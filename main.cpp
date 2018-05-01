@@ -241,7 +241,7 @@ void oneArg(char* argv[], polynomial polys[26], string& record_filename, bool& r
 
     string ext(".exp"); string argv_1(argv[1]);
     cout<<"Loading "<<argv[1]<<endl;
-    if(fileExists(argv[1])) {
+    if(fileExists(argv[1] + ext) || fileExists(argv[1])) {
         string expression;
         int lineNumber = 0;
         ifstream infile;
@@ -265,7 +265,7 @@ void twoArg(char* argv[], polynomial polys[26], string& record_filename, bool& r
     string first = argv[1], second = argv[2], ext(".spt") ;
     cout<<first<<" "<<second<<endl;
     if(first == "EXECUTE") {
-        if(fileExists(argv[2])) {
+        if(fileExists(argv[2] + ext) || fileExists(argv[2])) {
             string expression;
             ifstream infile;
             // Appending extension if necessary
@@ -286,7 +286,7 @@ void twoArg(char* argv[], polynomial polys[26], string& record_filename, bool& r
         }
     }
     else if(first == "RECORD") {
-        if(fileExists(argv[2])) {
+        if(fileExists(argv[2] + ext) || fileExists(argv[2])) {
             string ex = "FILENAME_ALREADY_EXISTS";
             throw ex;
         }
@@ -390,7 +390,7 @@ void print(string line, polynomial polys [26], string ALPHABET){
 void save(string line, polynomial polys [26], string ALPHABET){
     string outfile_name(line.substr(line.find("SAVE")+6, string::npos)), ext(".exp");
 
-    if(fileExists(outfile_name)) {
+    if(fileExists(outfile_name + ext) || fileExists(outfile_name)) {
         string filename_error = "FILENAME_ALREADY_EXISTS";
         throw filename_error;
     }
@@ -412,7 +412,7 @@ void load(string line, polynomial polys [26], string ALPHABET){
 
     string infile_name(line.substr(line.find("LOAD") + 6, string::npos)), ext(".exp");
 
-    if (fileExists(infile_name)) {
+    if (fileExists(infile_name + ext) || fileExists(infile_name)) {
         string expression;
         int lineNumber = 0;
         ifstream infile;
