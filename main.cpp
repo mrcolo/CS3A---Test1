@@ -10,7 +10,7 @@
 #include <string>
 #include <sstream>
 #include <stack>
-#include<fstream>
+#include <fstream>
 
 using namespace std;
 
@@ -33,7 +33,9 @@ void cleanInput(string& line);
 bool fileExists(const string& filename);
 int getDerivation(string s );
 bool isExiting(string s);
-void input(const string WELCOMEMSG, const string INPUTPROMPT,const string ALPHABET, string command, vector<string>& strRecord,polynomial polys [26], stack<StateStruct>& g_StateStack);
+void initializeStack(const string WELCOMEMSG, const string INPUTPROMPT,const string ALPHABET, string command, vector<string>& strRecord,polynomial polys [26], stack<StateStruct>& g_StateStack);
+bool hasExt(const string &filename, const string &extension);
+
 
 //ARGUMENT FUNCTIONS
 void handleArg(int argc,char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack,vector<string>&);
@@ -75,7 +77,7 @@ int main(int argc, char* argv[]) {
     }
 
     //EXECUTE ALL THE STATES
-    input(WELCOMEMSG,INPUTPROMPT,ALPHABET,command,strRecord,polys,g_StateStack);
+    initializeStack(WELCOMEMSG,INPUTPROMPT,ALPHABET,command,strRecord,polys,g_StateStack);
 
     //RECORD DATA IF OPTION IS ON
     if(recording) {
@@ -172,7 +174,7 @@ bool isExiting(string s){
     string command(s.substr(0,s.find(' ')));
     return (command == "EXIT" || command == "");
 }
-void input(const string WELCOMEMSG, const string INPUTPROMPT,const string ALPHABET, string command, vector<string>& strRecord,polynomial polys [26], stack<StateStruct>& g_StateStack){
+void initializeStack(const string WELCOMEMSG, const string INPUTPROMPT,const string ALPHABET, string command, vector<string>& strRecord,polynomial polys [26], stack<StateStruct>& g_StateStack){
     //DISPLAY WELCOME MSG
     bool isCin = true;
     int current = 0;
@@ -219,7 +221,9 @@ void input(const string WELCOMEMSG, const string INPUTPROMPT,const string ALPHAB
     } while(!g_StateStack.empty());
 
 }
+bool hasExt(const string &filename, const string &extension){
 
+}
 //ARGUMENT FUNCTIONS
 void handleArg(int argc,char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack, vector<string>& strRecord){
 
