@@ -91,7 +91,6 @@ int main(int argc, char* argv[]) {
         cout<<"TERMINATING..."<<endl;
         outfile.close();
     }
-
     return 0;
 }
 
@@ -134,7 +133,7 @@ void fillStack(string line, polynomial polys[26], stack<StateStruct>& g_StateSta
     else if(command == "LOAD")
         g_StateStack.push(LOAD);
     else if(command == "EXIT" || command == "")
-        cout<<"Exiting Expression Calculator..."<<endl;
+        cout<<"Exiting Expression Calculator in User Mode..."<<endl;
     else if(command == "HELP")
         g_StateStack.push(HELP);
     else
@@ -238,7 +237,8 @@ void handleArg(int argc,char* argv[], polynomial polys[26], string& record_filen
     }
 }
 void oneArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack,vector<string>& strRecord) {
-
+    if(argv[1] == "/?" || argv[1] == "/h")
+        
     cout<<"Loading "<<argv[1]<<endl;
     if(fileExists(argv[1])) {
         string expression;
@@ -292,7 +292,6 @@ void twoArg(char* argv[], polynomial polys[26], string& record_filename, bool& r
         throw ex;
     }
 }
-
 //CONTROLLER FUNCTIONS
 void let(string line, polynomial polys [26], string ALPHABET){
 
