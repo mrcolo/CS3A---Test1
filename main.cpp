@@ -35,13 +35,10 @@ int getDerivation(string s );
 bool isExiting(string s);
 void initializeStack(const string WELCOMEMSG, const string INPUTPROMPT,const string ALPHABET, string command, vector<string>& strRecord,polynomial polys [26], stack<StateStruct>& g_StateStack);
 bool hasExt(const string &filename, const string &extension);
-
-
 //ARGUMENT FUNCTIONS
 void handleArg(int argc,char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack,vector<string>&);
 void oneArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack,vector<string>& strRecord);
 void twoArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack, vector<string>& strRecord);
-
 //CONTROLLER FUNCTIONS
 void let(string line, polynomial polys [26], string ALPHABET);
 void eval(string line, polynomial polys [26], string ALPHABET);
