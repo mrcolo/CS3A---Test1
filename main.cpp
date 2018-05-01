@@ -91,7 +91,6 @@ int main(int argc, char* argv[]) {
         cout<<"TERMINATING..."<<endl;
         outfile.close();
     }
-
     return 0;
 }
 
@@ -134,7 +133,7 @@ void fillStack(string line, polynomial polys[26], stack<StateStruct>& g_StateSta
     else if(command == "LOAD")
         g_StateStack.push(LOAD);
     else if(command == "EXIT" || command == "")
-        cout<<"Exiting Expression Calculator..."<<endl;
+        cout<<"Exiting Expression Calculator in User Mode..."<<endl;
     else if(command == "HELP")
         g_StateStack.push(HELP);
     else
@@ -239,27 +238,36 @@ void handleArg(int argc,char* argv[], polynomial polys[26], string& record_filen
 }
 void oneArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack,vector<string>& strRecord) {
 
-    string ext(".exp"); string argv_1(argv[1]);
-    cout<<"Loading "<<argv[1]<<endl;
-    if(fileExists(argv[1] + ext) || fileExists(argv[1])) {
-        string expression;
-        int lineNumber = 0;
-        ifstream infile;
-        // Appending extension if necessary
-        if (!hasExt(argv[1], ext)) {
-            argv_1.append(ext);
-        }
-        infile.open(argv_1);
-        while(getline(infile, expression)) {
-            polynomial temp_poly(expression);
-            polys[lineNumber] = temp_poly;
-            lineNumber++;
-        }
-        infile.close();
+    string current = argv[1];
+    if(current == "/?" || current == "/h"){
+        help(record_filename, polys, ALPHABET);
+        exit(0);
     }
-    else {
-        cout<<"FILE_DOESNT_EXIST"<<endl;
+    else{
+        string ext(".exp"); string argv_1(argv[1]);
+        cout<<"Loading "<<argv[1]<<endl;
+        if(fileExists(argv[1] + ext) || fileExists(argv[1])) {
+            string expression;
+            int lineNumber = 0;
+            ifstream infile;
+            // Appending extension if necessary
+            if (!hasExt(argv[1], ext)) {
+                argv_1.append(ext);
+            }
+            infile.open(argv_1);
+            while(getline(infile, expression)) {
+                polynomial temp_poly(expression);
+                polys[lineNumber] = temp_poly;
+                lineNumber++;
+            }
+            infile.close();
+        }
+        else {
+            cout<<"FILE_DOESNT_EXIST"<<endl;
+        }
     }
+
+
 }
 void twoArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack, vector<string>& strRecord) {
     string first = argv[1], second = argv[2], ext(".spt") ;
