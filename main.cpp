@@ -414,12 +414,13 @@ void save(string line, polynomial polys [26], string ALPHABET){
 void load(string line, polynomial polys [26], string ALPHABET){
 
     string infile_name(line.substr(line.find("LOAD") + 6, string::npos)), ext(".exp");
-
+    cout<<infile_name<<endl;
     if (fileExists(infile_name)) {
         string expression;
         int lineNumber = 0;
         ifstream infile;
         // Appending extension if necessary
+
         if (!hasExt(infile_name, ext)) {
             rename(infile_name.c_str(), (infile_name + ext).c_str());
         }
