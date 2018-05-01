@@ -63,7 +63,6 @@ int main(int argc, char* argv[]) {
     const string WELCOMEMSG = "Welcome to Expression Calculator. If you don't know what to do, type HELP.\n",
                  INPUTPROMPT = "INPUT: ";
     const string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
     //HANDLE ARGUMENTS
     try{
         handleArg(argc,argv, polys, record_filename, recording, ALPHABET, g_StateStack, strRecord);

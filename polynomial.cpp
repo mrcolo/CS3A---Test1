@@ -134,17 +134,24 @@ void polynomial::combineLikeTerms()
 {
     vector<term> ans;
     term temp;
-    order();//sort in order
+    order();
+
     while(!poly.empty()){
+
         temp = poly[0]; //store first element in a variable
+
         poly.erase(poly.begin(),poly.begin()+1);//erase first element from vector
         if(temp.getPower() == poly[0].getPower()){
-            temp += poly[0];
-            poly.erase(poly.begin(), poly.begin()+1);
+
+            temp = temp + poly[0];
+            if(poly.size() >= 1)
+             poly.erase(poly.begin(), poly.begin()+1);
         }
         if(temp.getCoeff() != 0)
             ans.push_back(temp);
+
     }
+
     poly = ans;
 }
 
@@ -161,6 +168,7 @@ polynomial operator+(const polynomial& a, const polynomial &b){
     }
 
     ans.combineLikeTerms();
+
     return ans;
 }
 

@@ -46,13 +46,15 @@ term& term::operator=(const term &other)
 
 double term::operator()(double x)
 {
-    return coeff.toDouble() * pow(x,power.toDouble());
+    return coeff.toDouble() * pow(x, power.toDouble());
 }
 
 term& term::operator+=(const term &other)
 {
-    if(power == other.power)
-        coeff += other.coeff;
+    if(power == other.power){
+        coeff = coeff + other.coeff;
+    }
+
     return *this;
 }
 
@@ -194,7 +196,6 @@ void term::stringToTerm(string s) {
 
     bool yesUpperx = s.find('X') != string::npos;
     bool yesCap = s.find("^") != string::npos;
-
 
     if(yesUpperx && yesCap){
         fraction f(s.substr(0,s.find("X")));
