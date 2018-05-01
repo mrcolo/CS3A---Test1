@@ -1,3 +1,9 @@
+/* EXPRESSION_CALCULATOR v0.1.0
+ * I, Francesco Colonnese, do hereby certify that I have derived no assistance for this project or examination from any sources whatever, whether oral, written, or in print. I also understand that if it is found that I have received unauthorized assistance, then I and the individuals involved will receive a failing grade.
+ * I, Arman Mansourian, do hereby certify that I have derived no assistance for this project or examination from any sources whatever, whether oral, written, or in print. I also understand that if it is found that I have received unauthorized assistance, then I and the individuals involved will receive a failing grade.
+ * CREATED BY FRANCESCO COLONNESE AND ARMAN MANSOURIAN
+ */
+
 #include <iostream>
 #include "polynomial.h"
 #include <vector>
@@ -11,11 +17,12 @@ using namespace std;
 //DEFINE FUNCTION POINTER FOR STATE CONTROLLER
 typedef void (*fptr)(string, polynomial [], string);
 
-//struct for STATE CONTROLLER
+//STRUCT FOR STATE CONTROLLER
 struct StateStruct {
     fptr f;
 };
 
+//DEFINE FUNCTION POINTER FOR ARGUMENTS
 typedef void (*argptr)(char*[], polynomial[], string&, bool&, string, stack<StateStruct>&,vector<string>&);
 
 //HELPER FUNCTIONS
@@ -67,9 +74,10 @@ int main(int argc, char* argv[]) {
         return 0;
     }
 
+    //EXECUTE ALL THE STATES
     input(WELCOMEMSG,INPUTPROMPT,ALPHABET,command,strRecord,polys,g_StateStack);
 
-
+    //RECORD DATA IF OPTION IS ON
     if(recording) {
         ofstream outfile;
         outfile.open(record_filename);
@@ -97,7 +105,7 @@ void fillStack(string line, polynomial polys[26], stack<StateStruct>& g_StateSta
 
     const string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    StateStruct LET,EVAL,PRINT,SAVE,LOAD,HELP,ERR,EXIT;
+    StateStruct LET,EVAL,PRINT,SAVE,LOAD,HELP,ERR;
 
     LET.f = &let;
     EVAL.f = &eval;
@@ -107,39 +115,28 @@ void fillStack(string line, polynomial polys[26], stack<StateStruct>& g_StateSta
     HELP.f = &help;
     ERR.f = &err;
 
-
     string command(line.substr(0,line.find(' ')));
 
-    //turns string to uppercase
+    //TURNS STRING TO UPPERCASE
     for (char &i : command)
         i = toupper(i);
 
-    if(command == "LET"){
+    if(command == "LET")
         g_StateStack.push(LET);
-    }
-    else if(command == "EVAL"){
+    else if(command == "EVAL")
         g_StateStack.push(EVAL);
-    }
-    else if(command == "PRINT"){
+    else if(command == "PRINT")
         g_StateStack.push(PRINT);
-
-    }
-    else if(command == "SAVE") {
+    else if(command == "SAVE")
         g_StateStack.push(SAVE);
-
-    }
-    else if(command == "LOAD") {
+    else if(command == "LOAD")
         g_StateStack.push(LOAD);
-    }
-    else if(command == "EXIT" || command == ""){
+    else if(command == "EXIT" || command == "")
         cout<<"Exiting Expression Calculator..."<<endl;
-    }
-    else if(command == "HELP"){
+    else if(command == "HELP")
         g_StateStack.push(HELP);
-    }
-    else{
+    else
         g_StateStack.push(ERR);
-    }
 }
 void clearStack(stack<StateStruct>& g_StateStack){
     for(int i = 0; i< g_StateStack.size();i++)
