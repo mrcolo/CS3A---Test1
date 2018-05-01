@@ -237,33 +237,49 @@ void handleArg(int argc,char* argv[], polynomial polys[26], string& record_filen
     }
 }
 void oneArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack,vector<string>& strRecord) {
-    if(argv[1] == "/?" || argv[1] == "/h")
-        
-    cout<<"Loading "<<argv[1]<<endl;
-    if(fileExists(argv[1])) {
-        string expression;
-        int lineNumber = 0;
-        ifstream infile;
-        infile.open(argv[1]);
-        while(getline(infile, expression)) {
-            polynomial temp_poly(expression);
-            polys[lineNumber] = temp_poly;
-            lineNumber++;
+    string current = argv[1];
+    if(current == "/?" || current == "/h"){
+        help(record_filename, polys, ALPHABET);
+        exit(0);
+    }
+    else{
+        string ext(".exp"); string argv_1(argv[1]);
+        cout<<"Loading "<<argv[1]<<endl;
+        if(fileExists(argv[1])) {
+            string expression;
+            int lineNumber = 0;
+            ifstream infile;
+            // Appending extension if necessary
+            if (!hasExt(argv[1], ext)) {
+                argv_1.append(ext);
+            }
+            infile.open(argv_1);
+            while(getline(infile, expression)) {
+                polynomial temp_poly(expression);
+                polys[lineNumber] = temp_poly;
+                lineNumber++;
+            }
+            infile.close();
         }
-        infile.close();
+        else {
+            cout<<"FILE_DOESNT_EXIST"<<endl;
+        }
     }
-    else {
-        cout<<"FILE_DOESNT_EXIST"<<endl;
-    }
+
+
 }
 void twoArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack, vector<string>& strRecord) {
-    string first = argv[1], second = argv[2];
+    string first = argv[1], second = argv[2], ext(".spt") ;
     cout<<first<<" "<<second<<endl;
     if(first == "EXECUTE") {
         if(fileExists(argv[2])) {
             string expression;
             ifstream infile;
-            infile.open(argv[2]);
+            // Appending extension if necessary
+            if (!hasExt(argv[2], ext)) {
+                second.append(ext);
+            }
+            infile.open(second);
             while(getline(infile, expression)){
                     fillStack(expression, polys, g_StateStack);
                     strRecord.push_back(expression);
@@ -282,7 +298,11 @@ void twoArg(char* argv[], polynomial polys[26], string& record_filename, bool& r
             throw ex;
         }
         else {
-            record_filename = argv[2];
+            // Appending extension if necessary
+            if (!hasExt(argv[2], ext)) {
+                second.append(ext);
+            }
+            record_filename = second;
             recording = true;
         }
     }
@@ -374,7 +394,7 @@ void print(string line, polynomial polys [26], string ALPHABET){
     }
 }
 void save(string line, polynomial polys [26], string ALPHABET){
-    string outfile_name(line.substr(line.find("SAVE")+6, string::npos));
+    string outfile_name(line.substr(line.find("SAVE")+6, string::npos)), ext(".exp");
 
     if(fileExists(outfile_name)) {
         string filename_error = "FILENAME_ALREADY_EXISTS";
@@ -382,6 +402,10 @@ void save(string line, polynomial polys [26], string ALPHABET){
     }
     else {
         ofstream outfile;
+        // Appending extension if necessary
+        if (!hasExt(outfile_name, ext)) {
+            rename(outfile_name.c_str(), (outfile_name + ext).c_str());
+        }
         outfile.open(outfile_name);
         for(size_t i = 0; i < 26; ++i) {
             outfile<<polys[i]<<endl;
@@ -392,12 +416,16 @@ void save(string line, polynomial polys [26], string ALPHABET){
 }
 void load(string line, polynomial polys [26], string ALPHABET){
 
-    string infile_name(line.substr(line.find("LOAD") + 6, string::npos));
+    string infile_name(line.substr(line.find("LOAD") + 6, string::npos)), ext(".exp");
 
     if (fileExists(infile_name)) {
         string expression;
         int lineNumber = 0;
         ifstream infile;
+        // Appending extension if necessary
+        if (!hasExt(infile_name, ext)) {
+            rename(infile_name.c_str(), (infile_name + ext).c_str());
+        }
         infile.open(infile_name);
         while (getline(infile, expression)) {
             polynomial temp_poly(expression);
