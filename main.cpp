@@ -478,11 +478,12 @@ void letv2(string line, polynomial polys [26], string ALPHABET){
 void eval(string line, polynomial polys [26], string ALPHABET){
     //TODO implement fractions
     if(line.length() > 5){
+        char current_exp = toupper(line[line.find("(")-1]);
+        string current_eval = line.substr(line.find("(") + 1, line.find(")"));
+        current_eval[current_eval.size()-1] = ' ';
 
-        string current_eval = line.substr(line.find("EVAL") + 6, string::npos);
-        current_eval[0] = toupper(current_eval[0]);
-
-        polys[ALPHABET.find(current_eval[0])].evaluate(atoi(&current_eval[2]));
+        fraction f(current_eval);
+        polys[ALPHABET.find(current_exp)].evaluate(f);
     }
     else{
         string ex = "BAD_LOAD";

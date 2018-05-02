@@ -68,13 +68,14 @@ void polynomial::deleteAll()
     poly.clear();
 }
 
-void polynomial::evaluate(int number){
-    int sum = 0;
-    cout<<"Evaluating Expression ("<<*this<<") at number "<<number<<"..."<<endl;
+void polynomial::evaluate(fraction f){
+    double sum = 0;
+    double number = f.toDouble();
+    cout<<"Evaluating Expression ("<<*this<<") at number "<<number<<"..."<<endl<<endl;
     for(int i = 0; i< poly.size();i++){
         sum += poly[i].getCoeff()*pow(number,poly[i].getPower());
     }
-    cout<<"Result: "<<sum<<endl;
+    cout<<"Result: "<<sum<<endl<<endl;
 
 }
 
