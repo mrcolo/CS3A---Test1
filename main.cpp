@@ -35,12 +35,14 @@ int getDerivation(string s );
 bool isExiting(string s);
 void initializeStack(const string WELCOMEMSG, const string INPUTPROMPT,const string ALPHABET, string command, vector<string>& strRecord,polynomial polys [26], stack<StateStruct>& g_StateStack);
 bool hasExt(const string &filename, const string &extension);
+void raisetoPositive(polynomial& p, int i);
 //ARGUMENT FUNCTIONS
 void handleArg(int argc,char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack,vector<string>&);
 void oneArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack,vector<string>& strRecord);
 void twoArg(char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack, vector<string>& strRecord);
 //CONTROLLER FUNCTIONS
 void let(string line, polynomial polys [26], string ALPHABET);
+void letv2(string line, polynomial polys [26], string ALPHABET);
 void eval(string line, polynomial polys [26], string ALPHABET);
 void print(string line, polynomial polys [26], string ALPHABET);
 void save(string line, polynomial polys [26], string ALPHABET);
@@ -63,8 +65,8 @@ int main(int argc, char* argv[]) {
     const string WELCOMEMSG = "Welcome to Expression Calculator. If you don't know what to do, type HELP.\n",
                  INPUTPROMPT = "INPUT: ";
     const string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
     //HANDLE ARGUMENTS
+
     try{
         handleArg(argc,argv, polys, record_filename, recording, ALPHABET, g_StateStack, strRecord);
     }
@@ -103,9 +105,10 @@ void fillStack(string line, polynomial polys[26], stack<StateStruct>& g_StateSta
 
     const string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    StateStruct LET,EVAL,PRINT,SAVE,LOAD,HELP,ERR;
+    StateStruct LET,LETv2,EVAL,PRINT,SAVE,LOAD,HELP,ERR;
 
     LET.f = &let;
+    LETv2.f = &letv2;
     EVAL.f = &eval;
     PRINT.f = &print;
     SAVE.f = &save;
@@ -113,28 +116,54 @@ void fillStack(string line, polynomial polys[26], stack<StateStruct>& g_StateSta
     HELP.f = &help;
     ERR.f = &err;
 
-    string command(line.substr(0,line.find(' ')));
+    unsigned long pos;
+    string command;
+    bool isV2 = false;
+
+    if((pos = line.find(' ')) != string::npos){
+        command = line.substr(0,line.find(' '));
+    }
+    else{
+        command = line.substr(0, string::npos);
+    }
+
+    for(int i = 0; i < ALPHABET.length();i++)
+        if(line[0] == tolower(ALPHABET[i]) && line[2] == '='){
+            g_StateStack.push(LETv2);
+            isV2 = true;
+        }
+
 
     //TURNS STRING TO UPPERCASE
     for (char &i : command)
         i = toupper(i);
-
-    if(command == "LET")
-        g_StateStack.push(LET);
-    else if(command == "EVAL")
-        g_StateStack.push(EVAL);
-    else if(command == "PRINT")
-        g_StateStack.push(PRINT);
-    else if(command == "SAVE")
-        g_StateStack.push(SAVE);
-    else if(command == "LOAD")
-        g_StateStack.push(LOAD);
-    else if(command == "EXIT" || command == "")
-        cout<<"Exiting Expression Calculator in User Mode..."<<endl;
-    else if(command == "HELP")
-        g_StateStack.push(HELP);
-    else
-        g_StateStack.push(ERR);
+    if(!isV2){
+        if(command == "LET")
+            g_StateStack.push(LET);
+        else
+        if(command == "EVAL")
+            g_StateStack.push(EVAL);
+        else
+        if(command == "PRINT")
+            g_StateStack.push(PRINT);
+        else
+        if(command == "SAVE")
+            g_StateStack.push(SAVE);
+        else
+        if(command == "LOAD")
+            g_StateStack.push(LOAD);
+        else
+        if(command == "HELP")
+            g_StateStack.push(HELP);
+        else
+        if(command == "EXIT" || command == ""){
+            cout<<endl;
+            if(g_StateStack.size() >= 1)
+                g_StateStack.pop();
+        }
+        else
+            g_StateStack.push(ERR);
+    }
 }
 void clearStack(stack<StateStruct>& g_StateStack){
     for(int i = 0; i< g_StateStack.size();i++)
@@ -187,7 +216,9 @@ void initializeStack(const string WELCOMEMSG, const string INPUTPROMPT,const str
         try {
             if(isCin){
                 getInput(INPUTPROMPT, command, strRecord);
+
                 fillStack(command, polys, g_StateStack);
+
             }
             else{
                 command = strRecord[(strRecord.size()-1)-current];
@@ -198,9 +229,9 @@ void initializeStack(const string WELCOMEMSG, const string INPUTPROMPT,const str
 
                 current++;
             }
-
             if(!isExiting(command)){
                 g_StateStack.top().f(command, polys, ALPHABET);
+
             }
             else{
                 clearStack(g_StateStack);
@@ -220,6 +251,17 @@ void initializeStack(const string WELCOMEMSG, const string INPUTPROMPT,const str
 bool hasExt(const string &filename, const string &extension){
 
 }
+void raisetoPositive(polynomial& p, int i ){
+
+    stringstream ss;
+
+    polynomial temp = p;
+    for(int ite = 0; ite<(i-1);ite++)
+        p = p * temp;
+
+
+}
+
 //ARGUMENT FUNCTIONS
 void handleArg(int argc,char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack, vector<string>& strRecord){
 
@@ -242,7 +284,6 @@ void oneArg(char* argv[], polynomial polys[26], string& record_filename, bool& r
     }
     else{
         string ext(".exp"); string argv_1(argv[1]);
-        cout<<"Loading "<<argv[1]<<endl;
         if(fileExists(argv[1] + ext) || fileExists(argv[1])) {
             string expression;
             int lineNumber = 0;
@@ -251,12 +292,20 @@ void oneArg(char* argv[], polynomial polys[26], string& record_filename, bool& r
             if (!hasExt(argv[1], ext)) {
                 argv_1.append(ext);
             }
+
             infile.open(argv_1);
+            cout<<"Loading "<<argv[1]<<endl;
+            cout<<"------------------------------------------------------------------------------"<<endl;
+            cout<<"Available Expressions"<<endl;
             while(getline(infile, expression)) {
+
                 polynomial temp_poly(expression);
                 polys[lineNumber] = temp_poly;
+                cout<<ALPHABET[lineNumber]<<" = "<<polys[lineNumber]<<endl;
                 lineNumber++;
             }
+            cout<<"------------------------------------------------------------------------------"<<endl;
+
             infile.close();
         }
         else {
@@ -331,15 +380,88 @@ void let(string line, polynomial polys [26], string ALPHABET){
         throw exception;
     }
 }
+void letv2(string line, polynomial polys [26], string ALPHABET){
+
+    string exception;
+    unsigned long pos,pos1,pos2;
+    char current_exp = toupper(line[0]);
+    if((pos = line.find('=')) != string::npos){
+        if((pos = line.find("(")) == string::npos){
+
+
+            polynomial p(line.substr(pos+4, string::npos));
+
+            cout<<"Generated "<<current_exp<< " = "<<p<<endl<<endl;
+
+            polys[ALPHABET.find(current_exp)] = p;
+        }
+        else{
+            if((pos1 = line.find(")")) != string::npos){
+                if((pos2 = line.find_last_of("^")) != string::npos && pos2 > pos1){
+                    pos = line.find("(");
+                    pos1 = line.find(")");
+
+                    int index;
+
+                    stringstream ss;
+
+                    string poly = line.substr(pos+1,pos2-6);
+                    ss<<line[pos2+1];
+                    ss>>index;
+                    polynomial p(poly);
+                    raisetoPositive(p,index);
+
+                    polys[ALPHABET.find(current_exp)] = p;
+
+                    cout<<"Generated "<<current_exp<< " = "<<p<<endl<<endl;
+
+                }
+                else{
+                    //TODO F(G) if poly.length ==
+                    unsigned long beginPoly = line.find("(");
+                    unsigned long endPoly = line.find(")");
+                    string poly = line.substr(beginPoly+1,string::npos);
+
+
+                    poly[poly.length()-1] = ' ';
+
+                    polynomial p(poly);
+                        polys[ALPHABET.find(current_exp)] = p;
+                        cout<<"Generated "<<current_exp<< " = "<<p<<endl<<endl;
+                }
+            }
+            else{
+                exception = "LET NOT VALID: BAD_INPUT";
+                throw exception;
+            }
+
+        }
+
+    }
+    else{
+        exception = "LET not valid. Function not provided.";
+        throw exception;
+    }
+}
 void eval(string line, polynomial polys [26], string ALPHABET){
-    string current_eval = line.substr(line.find("EVAL")+6,string::npos);
 
-    current_eval[0] = toupper(current_eval[0]);
+    if(line.length() > 5){
 
-    polys[ALPHABET.find(current_eval[0])].evaluate(atoi(&current_eval[2]));
+        string current_eval = line.substr(line.find("EVAL") + 6, string::npos);
+        current_eval[0] = toupper(current_eval[0]);
+
+        polys[ALPHABET.find(current_eval[0])].evaluate(atoi(&current_eval[2]));
+    }
+    else{
+        string ex = "BAD_LOAD";
+        throw ex;
+    }
+
+
 
 }
 void print(string line, polynomial polys [26], string ALPHABET){
+
     string current_print = line.substr(line.find("PRINT")+7,string::npos);
 
     if(current_print.length() == 1){
@@ -392,6 +514,7 @@ void print(string line, polynomial polys [26], string ALPHABET){
     }
 }
 void save(string line, polynomial polys [26], string ALPHABET){
+
     string outfile_name(line.substr(line.find("SAVE")+6, string::npos)), ext(".exp");
 
     if(fileExists(outfile_name + ext) || fileExists(outfile_name)) {
@@ -417,10 +540,12 @@ void load(string line, polynomial polys [26], string ALPHABET){
     string infile_name(line.substr(line.find("LOAD") + 6, string::npos)), ext(".exp");
 
     if (fileExists(infile_name + ext) || fileExists(infile_name)) {
+
         string expression;
         int lineNumber = 0;
         ifstream infile;
         // Appending extension if necessary
+
         if (!hasExt(infile_name, ext)) {
             infile_name.append(ext);
         }
@@ -436,6 +561,7 @@ void load(string line, polynomial polys [26], string ALPHABET){
     }
 }
 void help(string line, polynomial polys [26], string ALPHABET){
+
     const string INSTRUCTIONS =
             "POSSIBLE INSTRUCTIONS: \n\n"
                     "- LET  => Stores algebraic expression as capital letter A-Z\n\n"

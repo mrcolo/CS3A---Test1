@@ -44,6 +44,7 @@ fraction operator+(const fraction &x, const fraction &y)
     int num = x.num*y.denom + x.denom*y.num,
         denom = x.denom*y.denom;
     fraction ans(num,denom);
+
     return ans;
 }
 

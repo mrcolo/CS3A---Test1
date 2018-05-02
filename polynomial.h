@@ -23,6 +23,7 @@ class polynomial
         void evaluate(int number);
         polynomial derive();
         polynomial returnDerivative(int i);
+
         friend
         polynomial operator+(const polynomial& a, const polynomial &b);
 

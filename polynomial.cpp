@@ -37,7 +37,9 @@ polynomial& polynomial::operator=(const polynomial &other)
     {
         deleteAll();
         copy(other);
+        this->combineLikeTerms();
     }
+
     return *this;
 }
 
@@ -75,6 +77,8 @@ void polynomial::evaluate(int number){
     cout<<"Result: "<<sum<<endl;
 
 }
+
+
 
 polynomial polynomial::derive(){
     string result = "";
@@ -134,17 +138,24 @@ void polynomial::combineLikeTerms()
 {
     vector<term> ans;
     term temp;
-    order();//sort in order
+    order();
+
     while(!poly.empty()){
+
         temp = poly[0]; //store first element in a variable
+
         poly.erase(poly.begin(),poly.begin()+1);//erase first element from vector
         if(temp.getPower() == poly[0].getPower()){
-            temp += poly[0];
-            poly.erase(poly.begin(), poly.begin()+1);
+
+            temp = temp + poly[0];
+            if(poly.size() >= 1)
+             poly.erase(poly.begin(), poly.begin()+1);
         }
         if(temp.getCoeff() != 0)
             ans.push_back(temp);
+
     }
+
     poly = ans;
 }
 
@@ -161,6 +172,7 @@ polynomial operator+(const polynomial& a, const polynomial &b){
     }
 
     ans.combineLikeTerms();
+
     return ans;
 }
 
@@ -207,8 +219,7 @@ ostream& operator<<(ostream& out, const polynomial &p)
 }
 
 
-istream& operator>>(istream& in, polynomial &p)
-{
+istream& operator>>(istream& in, polynomial &p){
     term input;
     p.poly.clear();
 
@@ -228,5 +239,6 @@ istream& operator>>(istream& in, polynomial &p)
 
     return in;
 }
+
 
 
