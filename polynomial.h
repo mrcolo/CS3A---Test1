@@ -20,7 +20,7 @@ class polynomial
         double operator()(double x);
         polynomial operator-();
         bool empty();
-        void evaluate(int number);
+        void evaluate(fraction f);
         polynomial derive();
         polynomial returnDerivative(int i);
 

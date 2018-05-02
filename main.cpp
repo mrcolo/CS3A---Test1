@@ -52,6 +52,7 @@ void err(string line, polynomial polys [26], string ALPHABET);
 
 int main(int argc, char* argv[]) {
 
+    int a = 2;
     //INITIAL CONTAINERS FOR DATA
     stack<StateStruct> g_StateStack;
     polynomial polys [26];
@@ -249,7 +250,7 @@ void initializeStack(const string WELCOMEMSG, const string INPUTPROMPT,const str
 
 }
 bool hasExt(const string &filename, const string &extension){
-
+    //TODO fill this up.
 }
 void raisetoPositive(polynomial& p, int i ){
 
@@ -364,7 +365,7 @@ void let(string line, polynomial polys [26], string ALPHABET){
 
     string exception;
     size_t pos;
-
+    cout<<endl<<"SYSTEM_MSG: LET IS DEPRECATED. USE F = 2x^2"<<endl<<endl;
 
     if((pos = line.find('=')) != string::npos){
         char current_exp = toupper(line[pos-2]);
@@ -383,17 +384,47 @@ void let(string line, polynomial polys [26], string ALPHABET){
 void letv2(string line, polynomial polys [26], string ALPHABET){
 
     string exception;
-    unsigned long pos,pos1,pos2;
+    unsigned long pos,pos1,pos2,op;
     char current_exp = toupper(line[0]);
     if((pos = line.find('=')) != string::npos){
         if((pos = line.find("(")) == string::npos){
+            string myEQ = line.substr(line.find("=")+2,string::npos);
+            stringstream ss;
+            bool areFunctions = false;
+            for(int i = 0;i< myEQ.length();i++)
+                if(isalpha(myEQ[i] = toupper(myEQ[i])) && myEQ[i] != 'X'){
+                    ss<<myEQ[i];
+                    areFunctions = true;
+                }
+
+            if(areFunctions){
+                char first, second;
+                ss>>first>>second;
+                polynomial p,q;
+                p = polys[ALPHABET.find(first)];
+                q = polys[ALPHABET.find(second)];
+                if(line.find("+") != string::npos)
+                    polys[ALPHABET.find(current_exp)] = p + q;
+                else
+                    if(line.find("-") != string::npos)
+                        polys[ALPHABET.find(current_exp)] = p - q;
+                    else
+                        if(line.find("*") != string::npos)
+                            polys[ALPHABET.find(current_exp)] = p * q;
 
 
-            polynomial p(line.substr(pos+4, string::npos));
+                cout<<"Generated "<<current_exp<< " = "<<polys[ALPHABET.find(current_exp)]<<endl<<endl;
 
-            cout<<"Generated "<<current_exp<< " = "<<p<<endl<<endl;
+            }
+            else{
 
-            polys[ALPHABET.find(current_exp)] = p;
+             polynomial p(line.substr(pos+4, string::npos));
+
+             cout<<"Generated "<<current_exp<< " = "<<p<<endl<<endl;
+
+             polys[ALPHABET.find(current_exp)] = p;
+
+            }
         }
         else{
             if((pos1 = line.find(")")) != string::npos){
@@ -444,13 +475,14 @@ void letv2(string line, polynomial polys [26], string ALPHABET){
     }
 }
 void eval(string line, polynomial polys [26], string ALPHABET){
-
+    //TODO implement fractions
     if(line.length() > 5){
+        char current_exp = toupper(line[line.find("(")-1]);
+        string current_eval = line.substr(line.find("(") + 1, line.find(")"));
+        current_eval[current_eval.size()-1] = ' ';
 
-        string current_eval = line.substr(line.find("EVAL") + 6, string::npos);
-        current_eval[0] = toupper(current_eval[0]);
-
-        polys[ALPHABET.find(current_eval[0])].evaluate(atoi(&current_eval[2]));
+        fraction f(current_eval);
+        polys[ALPHABET.find(current_exp)].evaluate(f);
     }
     else{
         string ex = "BAD_LOAD";
