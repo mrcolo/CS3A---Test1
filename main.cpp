@@ -52,6 +52,7 @@ void err(string line, polynomial polys [26], string ALPHABET);
 
 int main(int argc, char* argv[]) {
 
+    int a = 2;
     //INITIAL CONTAINERS FOR DATA
     stack<StateStruct> g_StateStack;
     polynomial polys [26];
