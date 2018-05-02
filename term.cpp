@@ -186,6 +186,10 @@ istream& operator>>(istream& in, term &t)
     return in;
 }
 
+bool term::isMixedNum(string s) {
+    return (s[0] == '(' && s[s.size()-1] == ')');
+}
+
 void term::stringToTerm(string s) {
     stringstream ss;
 
@@ -197,10 +201,21 @@ void term::stringToTerm(string s) {
 
 
     if(yesUpperx && yesCap){
-        fraction f(s.substr(0,s.find("X")));
-        coeff = f;
-        fraction g(s.substr(s.find("^")+1,string::npos));
-        power = g;
+        if(isMixedNum(s.substr(0,s.find("X")))){
+            fraction f(s.substr(1,s.find("X")-1));
+            coeff = f;
+        } else {
+            fraction f(s.substr(0,s.find("X")));
+            coeff = f;
+        }
+
+        if(isMixedNum(s.substr(s.find("^")+1,string::npos))){
+            fraction g(s.substr(s.find("^")+2,string::npos-1));
+            power = g;
+        } else {
+            fraction g(s.substr(s.find("^")+1,string::npos));
+            power = g;
+        }
     }
     else{
             ss<<s.substr(0,string::npos);
@@ -210,5 +225,3 @@ void term::stringToTerm(string s) {
     if (coeff == 0)
         power = 0;
 }
-
-
