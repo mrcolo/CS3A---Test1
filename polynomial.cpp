@@ -37,7 +37,9 @@ polynomial& polynomial::operator=(const polynomial &other)
     {
         deleteAll();
         copy(other);
+        this->combineLikeTerms();
     }
+
     return *this;
 }
 
@@ -75,6 +77,8 @@ void polynomial::evaluate(int number){
     cout<<"Result: "<<sum<<endl;
 
 }
+
+
 
 polynomial polynomial::derive(){
     string result = "";
@@ -215,8 +219,7 @@ ostream& operator<<(ostream& out, const polynomial &p)
 }
 
 
-istream& operator>>(istream& in, polynomial &p)
-{
+istream& operator>>(istream& in, polynomial &p){
     term input;
     p.poly.clear();
 
@@ -236,5 +239,6 @@ istream& operator>>(istream& in, polynomial &p)
 
     return in;
 }
+
 
 
