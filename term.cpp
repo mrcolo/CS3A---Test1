@@ -189,7 +189,7 @@ istream& operator>>(istream& in, term &t)
 }
 
 bool term::isMixedNum(string s) {
-    return (s[0] == '(' && s[s.size()-1] == ')');
+    return (s[0] == '|' && s[s.size()-1] == '|');
 }
 
 void term::stringToTerm(string s) {
