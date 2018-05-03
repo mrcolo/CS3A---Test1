@@ -250,7 +250,7 @@ void initializeStack(const string WELCOMEMSG, const string INPUTPROMPT,const str
 
 }
 bool hasExt(const string &filename, const string &extension){
-    //TODO fill this up.
+    return (filename.find(extension) != std::string::npos);
 }
 void raisetoPositive(polynomial& p, int i ){
 
@@ -555,6 +555,7 @@ void save(string line, polynomial polys [26], string ALPHABET){
         ofstream outfile;
         // Appending extension if necessary
         if (!hasExt(outfile_name, ext)) {
+            cout<<"DOESNT HAVE EXTENSION"<<endl;
             outfile_name.append(ext);
         }
         outfile.open(outfile_name);
@@ -595,7 +596,8 @@ void help(string line, polynomial polys [26], string ALPHABET){
     const string INSTRUCTIONS =
             "POSSIBLE INSTRUCTIONS: \n\n"
                     "- LET  => Stores algebraic expression as capital letter A-Z\n\n"
-                    "\texample: LET F = 2X^1 + 4\n\n"
+                    "\texample: LET F = 2X^1 + 4\n"
+                    "\tnote: Mixed numbers must be in the following format |a+b/c| or |a_b/c| bars included.\n\n"
                     "- EVAL => evaluates pre-stored algebraic expression at a given value\n\n"
                     "\texample: EVAL F(1/4)\n\n"
                     "- PRINT => prints pre-stored algebraic expression\n\n"

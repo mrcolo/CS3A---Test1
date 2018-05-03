@@ -23,6 +23,7 @@ class term
         double getCoeff() const;
         void set(double c = 1, double p = 0);
         void set(fraction c = 1, fraction p = 0);
+        bool isMixedNum(string s);
 
         friend
         bool operator<(const term& a, const term &b);
