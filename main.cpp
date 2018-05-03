@@ -598,7 +598,7 @@ void help(string line, polynomial polys [26], string ALPHABET){
             "POSSIBLE INSTRUCTIONS: \n\n"
                     "- LET  => Stores algebraic expression as capital letter A-Z\n\n"
                     "\texample: LET F = 2X^1 + 4\n"
-                    "\tnote: Mixed numbers must be in the following format (a+b/c) or (a_b/c) parentheses included.\n\n"
+                    "\tnote: Mixed numbers must be in the following format |a+b/c| or |a_b/c| bars included.\n\n"
                     "- EVAL => evaluates pre-stored algebraic expression at a given value\n\n"
                     "\texample: EVAL F(1/4)\n\n"
                     "- PRINT => prints pre-stored algebraic expression\n\n"
