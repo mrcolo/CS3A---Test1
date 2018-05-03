@@ -262,7 +262,6 @@ void raisetoPositive(polynomial& p, int i ){
 
 
 }
-
 //ARGUMENT FUNCTIONS
 void handleArg(int argc,char* argv[], polynomial polys[26], string& record_filename, bool& recording, string ALPHABET, stack<StateStruct>& g_StateStack, vector<string>& strRecord){
 
@@ -360,7 +359,6 @@ void twoArg(char* argv[], polynomial polys[26], string& record_filename, bool& r
         throw ex;
     }
 }
-
 //CONTROLLER FUNCTIONS
 void let(string line, polynomial polys [26], string ALPHABET){
 
@@ -476,7 +474,6 @@ void letv2(string line, polynomial polys [26], string ALPHABET){
     }
 }
 void eval(string line, polynomial polys [26], string ALPHABET){
-    //TODO implement fractions
     if(line.length() > 5){
         char current_exp = toupper(line[line.find("(")-1]);
         string current_eval = line.substr(line.find("(") + 1, line.find(")"));
