@@ -250,7 +250,7 @@ void initializeStack(const string WELCOMEMSG, const string INPUTPROMPT,const str
 
 }
 bool hasExt(const string &filename, const string &extension){
-    //TODO fill this up.
+    return (filename.find(extension) != std::string::npos);
 }
 void raisetoPositive(polynomial& p, int i ){
 
@@ -557,6 +557,7 @@ void save(string line, polynomial polys [26], string ALPHABET){
         ofstream outfile;
         // Appending extension if necessary
         if (!hasExt(outfile_name, ext)) {
+            cout<<"DOESNT HAVE EXTENSION"<<endl;
             outfile_name.append(ext);
         }
         outfile.open(outfile_name);
