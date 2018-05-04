@@ -4,8 +4,8 @@
 
 polynomial::polynomial(string s) {
     stringstream ss;
-
     ss<<s;
+
     string current;
     while(ss>>current){
         term current_term(current);
@@ -86,7 +86,9 @@ polynomial polynomial::derive(){
     stringstream ss;
     for(int i = 0;i < poly.size(); i++){
         string current;
-        term current_term(poly[i].getPower()*poly[i].getCoeff(),poly[i].getPower()-1);
+        fraction p = poly[i].getPower()*poly[i].getCoeff();
+        fraction q = poly[i].getPower()-1;
+        term current_term(p,q);
 
         if(current_term.getCoeff() != 0){
             ss<<current_term;
@@ -94,6 +96,7 @@ polynomial polynomial::derive(){
             result+=(current+" ");
             ss.clear();
         }
+
     }
     polynomial p(result);
     return p;

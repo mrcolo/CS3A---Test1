@@ -94,6 +94,7 @@ void term::set(double c, double p)
 void term::set(fraction c, fraction p){
     coeff = c.getNum()/c.getDenom();
     power = p.getNum()/p.getDenom();
+
 }
 
 

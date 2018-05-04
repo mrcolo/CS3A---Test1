@@ -52,7 +52,6 @@ void err(string line, polynomial polys [26], string ALPHABET);
 
 int main(int argc, char* argv[]) {
 
-    int a = 2;
     //INITIAL CONTAINERS FOR DATA
     stack<StateStruct> g_StateStack;
     polynomial polys [26];
@@ -66,8 +65,8 @@ int main(int argc, char* argv[]) {
     const string WELCOMEMSG = "Welcome to Expression Calculator. If you don't know what to do, type HELP.\n",
                  INPUTPROMPT = "INPUT: ";
     const string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    
     //HANDLE ARGUMENTS
-
     try{
         handleArg(argc,argv, polys, record_filename, recording, ALPHABET, g_StateStack, strRecord);
     }
@@ -390,27 +389,34 @@ void letv2(string line, polynomial polys [26], string ALPHABET){
             string myEQ = line.substr(line.find("=")+2,string::npos);
             stringstream ss;
             bool areFunctions = false;
+            int functions = 0;
             for(int i = 0;i< myEQ.length();i++)
                 if(isalpha(myEQ[i] = toupper(myEQ[i])) && myEQ[i] != 'X'){
+                    functions++;
                     ss<<myEQ[i];
                     areFunctions = true;
                 }
 
             if(areFunctions){
-                char first, second;
-                ss>>first>>second;
-                polynomial p,q;
-                p = polys[ALPHABET.find(first)];
-                q = polys[ALPHABET.find(second)];
-                if(line.find("+") != string::npos)
-                    polys[ALPHABET.find(current_exp)] = p + q;
-                else
+                if(functions == 1){
+                    polys[ALPHABET.find(current_exp)] = polys[ALPHABET.find(myEQ[0])].returnDerivative(getDerivation(myEQ));
+
+                }
+                if(functions == 2){
+                    char first, second;
+                    ss>>first>>second;
+                    polynomial p,q;
+                    p = polys[ALPHABET.find(first)];
+                    q = polys[ALPHABET.find(second)];
+                    if(line.find("+") != string::npos)
+                        polys[ALPHABET.find(current_exp)] = p + q;
+                    else
                     if(line.find("-") != string::npos)
                         polys[ALPHABET.find(current_exp)] = p - q;
                     else
-                        if(line.find("*") != string::npos)
-                            polys[ALPHABET.find(current_exp)] = p * q;
-
+                    if(line.find("*") != string::npos)
+                        polys[ALPHABET.find(current_exp)] = p * q;
+                }
 
                 cout<<"Generated "<<current_exp<< " = "<<polys[ALPHABET.find(current_exp)]<<endl<<endl;
 
@@ -486,8 +492,6 @@ void eval(string line, polynomial polys [26], string ALPHABET){
         string ex = "BAD_LOAD";
         throw ex;
     }
-
-
 
 }
 void print(string line, polynomial polys [26], string ALPHABET){
@@ -597,7 +601,7 @@ void help(string line, polynomial polys [26], string ALPHABET){
             "POSSIBLE INSTRUCTIONS: \n\n"
                     "- LET  => Stores algebraic expression as capital letter A-Z\n\n"
                     "\texample: LET F = 2X^1 + 4\n"
-                    "\tnote: Mixed numbers must be in the following format |a+b/c| or |a_b/c| bars included.\n\n"
+                    "\tnote: Mixed numbers must be in the following format |a_b/c| bars included.\n\n"
                     "- EVAL => evaluates pre-stored algebraic expression at a given value\n\n"
                     "\texample: EVAL F(1/4)\n\n"
                     "- PRINT => prints pre-stored algebraic expression\n\n"

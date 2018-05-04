@@ -27,11 +27,11 @@ void fraction::stringToFraction(string x)
 {
     char junk;
     int whole, decimal,counter = -1;
-    bool isSlash = false, isDot = false, isNothing = false, isMixed = false, isUnder = false;
+    bool isSlash = false, isDot = false, isNothing = false, isUnder = false;
     stringstream ss;
     for(int i = 0; i < x.length();i++){
-        if(x[i] == '+')
-            isMixed = true;
+//        if(x[i] == '+')
+//            isMixed = true;
         if(x[i] == '_')
             isUnder = true;
         if(x[i] == '.')
@@ -45,16 +45,16 @@ void fraction::stringToFraction(string x)
         }
     }
     //use isSlash to evaluate only one point.
-    if(isMixed || isUnder){
+    if(isUnder){
         ss<<x;
         ss>>whole>>junk>>num>>junk>>denom;
         num += denom*whole;
     }
-    if(isSlash && !isMixed && !isUnder){
+    if(isSlash && !isUnder){
         ss<<x;
         ss>>num>>junk>>denom;
     }
-    if(isDot && !isMixed && !isUnder){
+    if(isDot && !isUnder){
         ss<<x;
         ss>>whole>>junk>>decimal;
         denom = (int)pow(10,counter);
@@ -62,7 +62,7 @@ void fraction::stringToFraction(string x)
         reduce();
 
     }
-    if(isNothing && !isMixed && !isUnder){
+    if(isNothing && !isUnder){
         ss<<x;
         ss>>num;
         denom = 1;
