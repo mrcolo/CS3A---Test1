@@ -65,7 +65,7 @@ int main(int argc, char* argv[]) {
     const string WELCOMEMSG = "Welcome to Expression Calculator. If you don't know what to do, type HELP.\n",
                  INPUTPROMPT = "INPUT: ";
     const string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    
+
     //HANDLE ARGUMENTS
     try{
         handleArg(argc,argv, polys, record_filename, recording, ALPHABET, g_StateStack, strRecord);
@@ -127,6 +127,7 @@ void fillStack(string line, polynomial polys[26], stack<StateStruct>& g_StateSta
         command = line.substr(0, string::npos);
     }
 
+
     for(int i = 0; i < ALPHABET.length();i++)
         if(line[0] == tolower(ALPHABET[i]) && line[2] == '='){
             g_StateStack.push(LETv2);
@@ -137,7 +138,9 @@ void fillStack(string line, polynomial polys[26], stack<StateStruct>& g_StateSta
     //TURNS STRING TO UPPERCASE
     for (char &i : command)
         i = toupper(i);
+
     if(!isV2){
+
         if(command == "LET")
             g_StateStack.push(LET);
         else
@@ -158,7 +161,7 @@ void fillStack(string line, polynomial polys[26], stack<StateStruct>& g_StateSta
         else
         if(command == "EXIT" || command == ""){
             cout<<endl;
-            if(g_StateStack.size() >= 1)
+            if(g_StateStack.size() >= 2)
                 g_StateStack.pop();
         }
         else
@@ -495,105 +498,124 @@ void eval(string line, polynomial polys [26], string ALPHABET){
 
 }
 void print(string line, polynomial polys [26], string ALPHABET){
+    if(line.length() > 5){
+        string current_print = line.substr(line.find("PRINT")+7,string::npos);
+        if(current_print.length() == 1){
+            current_print = toupper(current_print[0]);
+            cout<<current_print<<" = "<<polys[ALPHABET.find(current_print)]<<endl<<endl;
+        }
+        else{
+            int pos;
+            if((pos = current_print.find("=")) != string::npos){
 
-    string current_print = line.substr(line.find("PRINT")+7,string::npos);
+                string editFunction = current_print.substr(pos-2,pos-1);
+                editFunction[0] = toupper(editFunction[0]);
+                string instruction = current_print.substr(pos+2,string::npos);
 
-    if(current_print.length() == 1){
-        current_print = toupper(current_print[0]);
-        cout<<current_print<<" = "<<polys[ALPHABET.find(current_print)]<<endl<<endl;
+                char exp1,exp2,op;
+                if(instruction.find('\'') == string::npos){
+                    exp1 = toupper(instruction[0]);
+                    op = instruction [2];
+                    exp2 = toupper(instruction[4]);
+
+                    switch(op){
+                        case '+':
+                            cout<<"RESULT: "<< polys[ALPHABET.find(exp1)] + polys[ALPHABET.find(exp2)]<<endl<<endl;
+                            polys[ALPHABET.find(editFunction[0])] = polys[ALPHABET.find(exp1)] + polys[ALPHABET.find(exp2)];
+                            break;
+                        case '-':
+                            cout<<"RESULT: "<< polys[ALPHABET.find(exp1)] - polys[ALPHABET.find(exp2)]<<endl<<endl;
+                            polys[ALPHABET.find(editFunction[0])] = polys[ALPHABET.find(exp1)] - polys[ALPHABET.find(exp2)];
+                            break;
+                        case '*':
+                            cout<<"RESULT: "<< polys[ALPHABET.find(exp1)] * polys[ALPHABET.find(exp2)]<<endl<<endl;
+                            polys[ALPHABET.find(editFunction[0])] = polys[ALPHABET.find(exp1)] * polys[ALPHABET.find(exp2)];
+                            break;
+
+                        default:
+                            string exception = "BAD_INPUT";
+                            throw exception;
+                    }
+                }
+                else{
+                    int editFunctionIndex = ALPHABET.find(editFunction[0]);
+
+                    char receiver = toupper(instruction[0]);
+
+                    polys[editFunctionIndex] = polys[ALPHABET.find(receiver)].returnDerivative(getDerivation(instruction));
+
+                    cout<<editFunction<<" = "<<polys[ALPHABET.find(receiver)].returnDerivative(getDerivation(instruction))<<endl<<endl;
+                }
+
+            }
+        }
     }
     else{
-        int pos;
-        if((pos = current_print.find("=")) != string::npos){
-
-            string editFunction = current_print.substr(pos-2,pos-1);
-            editFunction[0] = toupper(editFunction[0]);
-            string instruction = current_print.substr(pos+2,string::npos);
-
-            char exp1,exp2,op;
-            if(instruction.find('\'') == string::npos){
-                exp1 = toupper(instruction[0]);
-                op = instruction [2];
-                exp2 = toupper(instruction[4]);
-
-                switch(op){
-                    case '+':
-                        cout<<"RESULT: "<< polys[ALPHABET.find(exp1)] + polys[ALPHABET.find(exp2)]<<endl<<endl;
-                        polys[ALPHABET.find(editFunction[0])] = polys[ALPHABET.find(exp1)] + polys[ALPHABET.find(exp2)];
-                        break;
-                    case '-':
-                        cout<<"RESULT: "<< polys[ALPHABET.find(exp1)] - polys[ALPHABET.find(exp2)]<<endl<<endl;
-                        polys[ALPHABET.find(editFunction[0])] = polys[ALPHABET.find(exp1)] - polys[ALPHABET.find(exp2)];
-                        break;
-                    case '*':
-                        cout<<"RESULT: "<< polys[ALPHABET.find(exp1)] * polys[ALPHABET.find(exp2)]<<endl<<endl;
-                        polys[ALPHABET.find(editFunction[0])] = polys[ALPHABET.find(exp1)] * polys[ALPHABET.find(exp2)];
-                        break;
-
-                    default:
-                        string exception = "BAD_INPUT";
-                        throw exception;
-                }
-            }
-            else{
-                int editFunctionIndex = ALPHABET.find(editFunction[0]);
-
-                char receiver = toupper(instruction[0]);
-
-                polys[editFunctionIndex] = polys[ALPHABET.find(receiver)].returnDerivative(getDerivation(instruction));
-
-                cout<<editFunction<<" = "<<polys[ALPHABET.find(receiver)].returnDerivative(getDerivation(instruction))<<endl<<endl;
-            }
-        }
+        string exception = "BAD_PRINT";
+        throw exception;
     }
+
+
 }
 void save(string line, polynomial polys [26], string ALPHABET){
+    if(line.length() > 4){
+        string outfile_name(line.substr(line.find("SAVE")+6, string::npos)), ext(".exp");
 
-    string outfile_name(line.substr(line.find("SAVE")+6, string::npos)), ext(".exp");
+        if(fileExists(outfile_name + ext) || fileExists(outfile_name)) {
+            string filename_error = "FILENAME_ALREADY_EXISTS";
+            throw filename_error;
+        }
+        else {
+            ofstream outfile;
+            // Appending extension if necessary
+            if (!hasExt(outfile_name, ext)) {
+                cout<<"DOESNT HAVE EXTENSION"<<endl;
+                outfile_name.append(ext);
+            }
+            outfile.open(outfile_name);
+            for(size_t i = 0; i < 26; ++i) {
+                outfile<<polys[i]<<endl;
+            }
+            outfile.close();
+        }
+    }
+    else{
+        string exception = "BAD_SAVE";
+        throw exception;
+    }
 
-    if(fileExists(outfile_name + ext) || fileExists(outfile_name)) {
-        string filename_error = "FILENAME_ALREADY_EXISTS";
-        throw filename_error;
-    }
-    else {
-        ofstream outfile;
-        // Appending extension if necessary
-        if (!hasExt(outfile_name, ext)) {
-            cout<<"DOESNT HAVE EXTENSION"<<endl;
-            outfile_name.append(ext);
-        }
-        outfile.open(outfile_name);
-        for(size_t i = 0; i < 26; ++i) {
-            outfile<<polys[i]<<endl;
-        }
-        outfile.close();
-    }
 
 }
 void load(string line, polynomial polys [26], string ALPHABET){
+   if(line.length() > 4){
+       string infile_name(line.substr(line.find("LOAD") + 6, string::npos)), ext(".exp");
 
-    string infile_name(line.substr(line.find("LOAD") + 6, string::npos)), ext(".exp");
+       if (fileExists(infile_name + ext) || fileExists(infile_name)) {
 
-    if (fileExists(infile_name + ext) || fileExists(infile_name)) {
+           string expression;
+           int lineNumber = 0;
+           ifstream infile;
+           // Appending extension if necessary
 
-        string expression;
-        int lineNumber = 0;
-        ifstream infile;
-        // Appending extension if necessary
+           if (!hasExt(infile_name, ext)) {
+               infile_name.append(ext);
+           }
+           infile.open(infile_name);
+           while (getline(infile, expression)) {
+               polynomial temp_poly(expression);
+               polys[lineNumber] = temp_poly;
+               lineNumber++;
+           }
+           infile.close();
+       } else {
+           cout << "FILE_DOESNT_EXIST" << endl;
+       }
+   }
+    else{
+       string exception = "BAD_LOAD";
+       throw exception;
+   }
 
-        if (!hasExt(infile_name, ext)) {
-            infile_name.append(ext);
-        }
-        infile.open(infile_name);
-        while (getline(infile, expression)) {
-            polynomial temp_poly(expression);
-            polys[lineNumber] = temp_poly;
-            lineNumber++;
-        }
-        infile.close();
-    } else {
-        cout << "FILE_DOESNT_EXIST" << endl;
-    }
 }
 void help(string line, polynomial polys [26], string ALPHABET){
 
